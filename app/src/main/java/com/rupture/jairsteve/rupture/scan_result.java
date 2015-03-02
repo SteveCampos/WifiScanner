@@ -19,10 +19,11 @@ import java.sql.SQLException;
 
 import controlador.controller_wlan;
 import controlador.wlan_cursor_adapter;
+import modelo.Constants;
 import modelo.ScanDbHelper;
 
 
-public class scan_result extends ListActivity {
+public class scan_result extends Activity {
 
 
 
@@ -32,7 +33,7 @@ public class scan_result extends ListActivity {
     private wlan_cursor_adapter wlanCursorAdapter ;
     private ListView lista;
     private ScanDbHelper scanDbHelper;
-
+    private TextView textViewRedesDescubiertas;
     private Context context;
 
     @Override
@@ -41,11 +42,14 @@ public class scan_result extends ListActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_scan_result);
 
+        textViewRedesDescubiertas = (TextView) findViewById(R.id.textViewRedesDescubiertas);
+
+
 
         context = this;
         //Agregando
 
-        lista = (ListView) findViewById(android.R.id.list);
+        lista = (ListView) findViewById(R.id.listViewScan);
         wlanDB = new controller_wlan(this);
 
 
@@ -67,10 +71,11 @@ public class scan_result extends ListActivity {
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id) {
 
-                TextView textView = (TextView) view;
+                Cursor cursor = (Cursor) parent.getItemAtPosition(position);
 
+                String ssid = cursor.getString(cursor.getColumnIndexOrThrow(Constants.SSID));
                 Toast.makeText(getApplicationContext(),
-                        "" +textView.getText(), Toast.LENGTH_LONG)
+                        "" +ssid, Toast.LENGTH_LONG)
                         .show();
                 Intent intent = new Intent(context, wlan.class);
                 intent.putExtra("id",id);
@@ -84,6 +89,7 @@ public class scan_result extends ListActivity {
 
     public void vincular() throws SQLException {
         cursor = wlanDB.readWlan();
+        textViewRedesDescubiertas.setText(""+cursor.getCount());
         startManagingCursor(cursor);
         wlanCursorAdapter = new wlan_cursor_adapter(this, cursor);
         lista.setAdapter(wlanCursorAdapter);

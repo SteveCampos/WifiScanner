@@ -8,6 +8,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.database.Cursor;
+import android.graphics.Typeface;
 import android.net.wifi.ScanResult;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
@@ -18,24 +19,41 @@ import android.widget.TextView;
 
 import java.util.List;
 
+import AsyncTask.AsyncTaskScan;
 import modelo.Wlan;
 import controlador.controller_wlan;
 
 
 public class splash_screen extends Activity {
 
-    WifiManager wifiManager;
-    Wlan wlan;
-    controller_wlan wlanDB;
-    IntentFilter intentFilter;
-    boolean registedReceived = false;
 
-    private ScanResultBroadcastReceiver scanResultBroadcastReceiver;
+    private splash_screen mainAtivity;
+    private AsyncTaskScan asyncTaskScan;
+
+    public static final String fontPathMonserratBold = "fonts/Montserrat-Bold.ttf";
+
+    private TextView textView_Splash_Screen_App_Name;
+    private TextView textView_Splash_Screen_Developer_Name;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //setContentView(R.layout.activity_splash_screen);
+        setContentView(R.layout.activity_splash_screen);
+
+        mainAtivity = this;
+
+        Typeface typefaceMonserratBold = Typeface.createFromAsset(getAssets(), fontPathMonserratBold);
+        //CAMBIAR ESTILO DE FUENTE A MONTSERRAT( se ve más cool)
+        textView_Splash_Screen_App_Name = (TextView) findViewById(R.id.textView_Splash_Screen_App_Name);
+        textView_Splash_Screen_App_Name.setTypeface(typefaceMonserratBold);
+        textView_Splash_Screen_Developer_Name = (TextView) findViewById(R.id.textView_Splash_Screen_Developer_Name);
+        textView_Splash_Screen_Developer_Name.setTypeface(typefaceMonserratBold);
+
+
+       asyncTaskScan = new AsyncTaskScan(mainAtivity);
+       asyncTaskScan.execute();
+
 
         Log.d("UI"," CREA LA UI");
         //wlanDB.deleteWlan();
@@ -87,7 +105,10 @@ public class splash_screen extends Activity {
 
         Cursor cursor = wlanDB.readWlan();
 
-*/
+
+
+
+
         wlanDB = new controller_wlan(this);
 
 
@@ -110,7 +131,7 @@ public class splash_screen extends Activity {
         }
         //start Wifi Scan
         wifiManager.startScan();
-/*
+
         Log.d("INTENT", "INICIANDO LA CLASE SCAN RESULTS");
         Intent intent = new Intent(this, scan_result.class);
         startActivity(intent);
@@ -140,8 +161,8 @@ public class splash_screen extends Activity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if (registedReceived) {
-            unregisterReceiver(scanResultBroadcastReceiver);
+        if (asyncTaskScan.isRegistedReceived()) {
+            unregisterReceiver(asyncTaskScan.getScanResultBroadcastReceiver());
             Log.d("REGISTER RECEIVER","UNREGISTER RECEIVER");
         }else{
             Log.d("REGISTER RECEIVER", "NO UNREGISTER BECAUSE NOT REGISTER");
@@ -168,6 +189,7 @@ public class splash_screen extends Activity {
         return super.onOptionsItemSelected(item);
     }
 
+    /*
     public void ShowWlan(Cursor cursor){
 
         StringBuilder builder = new StringBuilder("Table vendor results : \n");
@@ -202,5 +224,5 @@ public class splash_screen extends Activity {
         TextView textView = (TextView) findViewById(R.id.textView_id);
         textView.setText(builder);
 
-    }
+    }*/
 }

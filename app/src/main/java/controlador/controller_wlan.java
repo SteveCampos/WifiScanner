@@ -142,7 +142,7 @@ public class controller_wlan {
                 null,                                   // The values for the WHERE clause
                 null,                                     // don't group the rows
                 null,                                     // don't filter by row groups
-                null                                     // The sort order
+                Constants.CURRENT + " DESC, "+ Constants.LEVEL + " DESC "                                      // The sort order
         );
 
         //db.close();

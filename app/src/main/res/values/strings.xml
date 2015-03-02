@@ -7,4 +7,9 @@
     <string name="title_activity_scan_result">Resultados del Escaneo de Redes</string>
     <string name="title_activity_wlan">wlan</string>
 
+    <!-- STRINGS VALUES SPLASH SCREEN -->
+    <string name="splash_screen_app_name">RUPTURE</string>
+    <string name="splash_screen_developer_name">BY  STEVE  CAMPOS</string>
+    <string name="title_activity_scan_result_segunda_opcion">scan_result_segunda_opcion</string>
+    <string name="title_activity_mostrar_redes">mostrarRedes</string>
 </resources>

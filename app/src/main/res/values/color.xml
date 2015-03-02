@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="PersonalizadoSteve1">#009D84</color>
+    <color name="PersonalizadoSteve2">#39BCA4</color>
+    <color name="PersonalizadoSteve3">#F1EEDA</color>
+    <color name="PersonalizadoSteve4">#4C565E</color>
+    <color name="PersonalizadoSteve5">#E75244</color>
+
+
+    <color name="azul">#049DBF</color>
+    <color name="verde">#009D84</color>
+    <color name="rojo">#FF004E</color>
+    <color name="amarillo">#FED94E</color>
+
+
+
+    <color name="Personalizado1">#0D47A1</color>
+    <color name="Personalizado2">#1565C0</color>
+    <color name="Personalizado3">#F1EEDA</color>
+    <color name="Personalizado4">#4C565E</color>
+    <color name="Personalizado">#E75244</color>
+
+
+    <color name="Dark1">#19262F</color>
+    <color name="Dark2">#F8F3FA</color>
+    <color name="Dark3">#949A8C</color>
+    <color name="Dark4">#4C565E</color>
+    <color name="Dark5">#233642</color>
+
+
+    <color name="Blanco">#fffffe</color>
+
+</resources>

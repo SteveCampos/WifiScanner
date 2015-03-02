@@ -1,5 +1,6 @@
 package com.rupture.jairsteve.rupture;
 
+import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -20,10 +21,12 @@ public class ScanResultBroadcastReceiver extends BroadcastReceiver {
     WifiManager wifiManager;
     Wlan wlan;
     controller_wlan wlanDB;
+    private Activity mainActivty;
 
-      public ScanResultBroadcastReceiver(Context context, WifiManager wifiManager){
+      public ScanResultBroadcastReceiver(Activity mainActivty, WifiManager wifiManager){
+        this.mainActivty = mainActivty;
         this.wifiManager = wifiManager;
-        wlanDB = new controller_wlan(context);
+        wlanDB = new controller_wlan(mainActivty);
     }
 
     @Override
@@ -62,8 +65,9 @@ public class ScanResultBroadcastReceiver extends BroadcastReceiver {
 
         }
 
-        Intent startActivity = new Intent(context, scan_result.class);
+        Intent startActivity = new Intent(mainActivty, scan_result.class);
+        mainActivty.finish();
         //startActivity.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        context.startActivity(startActivity);
+        mainActivty.startActivity(startActivity);
     }
 }
