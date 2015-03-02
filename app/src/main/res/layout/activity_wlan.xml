@@ -3,29 +3,15 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     tools:context="com.rupture.jairsteve.rupture.wlan"
-    android:baselineAligned="false">
-
-    <LinearLayout
-        android:orientation="vertical"
-        android:layout_width="0dp"
-        android:layout_height="fill_parent"
-        android:layout_weight="1"
-        android:baselineAligned="false"
-        android:background="@drawable/ic_background_blurry">
-
-        <LinearLayout
-            android:orientation="vertical"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="10"
-            android:background="@drawable/layout_border_bottom">
+    android:baselineAligned="false"
+    android:orientation="vertical">
 
             <LinearLayout
                 android:orientation="vertical"
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
                 android:gravity="center_horizontal|bottom"
-                android:layout_weight="1">
+                android:layout_weight="2">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -39,146 +25,212 @@
                     android:text="WLAN_6789"
                     android:id="@+id/textView_scan_result_ssid"
                     android:textStyle="bold"
-                    android:textSize="32dp" />
+                    android:textSize="32dp"
+                    android:gravity="center"
+                    android:textColor="@color/PersonalizadoSteve2" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Lima, Perú"
-                    android:id="@+id/textView_scan_result_ubication" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:orientation="horizontal"
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
-                android:layout_weight="1"
-                android:gravity="center">
+                    android:id="@+id/textView_scan_result_ubication"
+                    android:textColor="@color/Personalizado4" />
 
                 <ProgressBar
                     android:layout_width="256dp"
                     android:layout_height="4dp"
                     android:id="@+id/progressBar_scan_result_signal"
-                    android:layout_gravity="top"
+                    android:layout_gravity="top|center_horizontal"
                     style="?android:attr/progressBarStyleHorizontal"
                     android:progress="50"
-                    android:mirrorForRtl="false" />
+                    android:layout_marginTop="8dp" />
             </LinearLayout>
-        </LinearLayout>
+
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:id="@+id/scrollView"
+        android:layout_weight="1">
 
         <LinearLayout
-            android:orientation="horizontal"
+            android:orientation="vertical"
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="2"
-            android:background="@drawable/layout_border_bottom">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="fill_parent"
-                android:text="OE4C146E9C798"
-                android:id="@+id/textView_scan_result_password"
-                android:gravity="center"
-                android:textStyle="bold"
-                android:textSize="24dp"
-                android:layout_weight="1"
-                android:layout_marginLeft="64dp" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/textView9"
-                android:background="@drawable/ic_key"
-                android:layout_gravity="center"
-                android:gravity="center" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="New Text"
-                android:id="@+id/textView12"
-                android:visibility="invisible" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="2"
-            android:background="@drawable/layout_border_bottom">
+            android:layout_height="fill_parent">
 
             <LinearLayout
-                android:orientation="horizontal"
+                android:orientation="vertical"
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
                 android:layout_weight="1"
-                android:background="@drawable/layout_border_right">
+                android:layout_marginTop="4dp">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="fill_parent"
-                    android:text="TP-LINK"
-                    android:id="@+id/textView_scan_result_vendor"
-                    android:layout_weight="1"
-                    android:gravity="center|right"
-                    android:textStyle="bold"
-                    android:paddingLeft="16dp"
-                    android:paddingRight="8dp"
-                    android:textSize="12dp" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/textView7"
-                    android:background="@drawable/ic_router"
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="fill_parent"
+                    android:layout_height="32dp"
                     android:gravity="center"
-                    android:layout_gravity="center_vertical" />
+                    android:id="@+id/linearLayout"
+                    android:layout_marginBottom="16dp">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Text"
-                    android:id="@+id/textView10"
-                    android:visibility="invisible" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="fill_parent"
+                        android:text="TP-LINK TECHNOLOGIES"
+                        android:id="@+id/textViewFabricante"
+                        android:layout_weight="2"
+                        android:gravity="center"
+                        android:textColor="@color/azul"
+                        android:textStyle="bold" />
+                </LinearLayout>
 
-            </LinearLayout>
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="fill_parent"
+                    android:layout_height="36dp"
+                    android:gravity="center">
 
-            <LinearLayout
-                android:orientation="horizontal"
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
-                android:layout_weight="1">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="fill_parent"
+                        android:text="MAC"
+                        android:id="@+id/textView2"
+                        android:layout_weight="1"
+                        android:textSize="12sp"
+                        android:textColor="@color/Dark1"
+                        android:gravity="left|center_vertical"
+                        android:layout_marginLeft="12dp" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="fill_parent"
-                    android:text="[PSK-WPA-ESS]"
-                    android:id="@+id/textView_scan_result_capabilities"
-                    android:layout_weight="1"
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="fill_parent"
+                        android:text="E8:94:F6:C2:5F:CE"
+                        android:id="@+id/textViewMac"
+                        android:layout_weight="1"
+                        android:textIsSelectable="true"
+                        android:textStyle="bold"
+                        android:textColor="@color/PersonalizadoSteve4"
+                        android:gravity="center_vertical" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="fill_parent"
+                    android:layout_height="36dp"
+                    android:id="@+id/linearLayout7"
+                    android:gravity="center_vertical">
+
+                    <TextView
+                        android:layout_width="96dp"
+                        android:layout_height="fill_parent"
+                        android:text="Capabilities"
+                        android:id="@+id/textView11"
+                        android:textSize="12sp"
+                        android:textColor="@color/Dark1"
+                        android:gravity="left|center_vertical"
+                        android:layout_marginLeft="12dp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="[WPA-PSKP-TKIP+CCMP]"
+                        android:id="@+id/textViewCapabilities"
+                        android:textIsSelectable="true"
+                        android:textStyle="bold"
+                        android:textColor="@color/PersonalizadoSteve4"
+                        android:gravity="center_vertical|center" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="fill_parent"
+                    android:layout_height="36dp"
                     android:gravity="center"
-                    android:textStyle="bold"
-                    android:textSize="12dp"
-                    android:layout_marginLeft="16dp" />
+                    android:id="@+id/linearLayout2">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/textView8"
-                    android:background="@drawable/ic_encryptation" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="fill_parent"
+                        android:text="Frecuencia"
+                        android:id="@+id/textView4"
+                        android:layout_weight="1"
+                        android:textSize="12sp"
+                        android:textColor="@color/Dark1"
+                        android:gravity="left|center_vertical"
+                        android:layout_marginLeft="12dp" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Text"
-                    android:id="@+id/textView11"
-                    android:visibility="invisible" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="fill_parent"
+                        android:text="2400 GHz"
+                        android:id="@+id/textViewFrecuencia"
+                        android:layout_weight="1"
+                        android:textIsSelectable="true"
+                        android:textStyle="bold"
+                        android:textColor="@color/PersonalizadoSteve4"
+                        android:gravity="left|center_vertical|fill_vertical" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="fill_parent"
+                    android:layout_height="36dp"
+                    android:gravity="center"
+                    android:id="@+id/linearLayout3">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="fill_parent"
+                        android:text="Level"
+                        android:id="@+id/textView7"
+                        android:layout_weight="1"
+                        android:textSize="12sp"
+                        android:textColor="@color/Dark1"
+                        android:gravity="left|center_vertical"
+                        android:layout_marginLeft="12dp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="fill_parent"
+                        android:text="88"
+                        android:id="@+id/textViewLevel"
+                        android:layout_weight="1"
+                        android:textIsSelectable="true"
+                        android:textStyle="bold"
+                        android:textColor="@color/PersonalizadoSteve4"
+                        android:gravity="left|center_vertical|fill_vertical" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="fill_parent"
+                    android:layout_height="36dp"
+                    android:gravity="center"
+                    android:id="@+id/linearLayout4" >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="fill_parent"
+                        android:text="Timestamp"
+                        android:id="@+id/textView9"
+                        android:layout_weight="1"
+                        android:textSize="12sp"
+                        android:textColor="@color/Dark1"
+                        android:gravity="left|center_vertical"
+                        android:layout_marginLeft="12dp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="fill_parent"
+                        android:text="985689547258684"
+                        android:id="@+id/textViewTimestamp"
+                        android:layout_weight="1"
+                        android:textIsSelectable="true"
+                        android:textStyle="bold"
+                        android:textColor="@color/PersonalizadoSteve4"
+                        android:gravity="left|center_vertical|fill_vertical" />
+                </LinearLayout>
+
             </LinearLayout>
         </LinearLayout>
-
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"></LinearLayout>
-    </LinearLayout>
+    </ScrollView>
 </LinearLayout>

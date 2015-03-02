@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.provider.ContactsContract;
 import android.util.Log;
 
 import java.sql.SQLException;
@@ -37,8 +38,7 @@ public class controller_wlan {
     }
 
     //Agregando adicional
-    public controller_wlan abrir() throws SQLException
-    {
+    public controller_wlan abrir(){
         db = scanDBHelper.getWritableDatabase();
         return this;
     }
@@ -344,6 +344,32 @@ public class controller_wlan {
                 selectionArgs);
 
         return count;
+    }
+
+    public Cursor getVendor(String id_vendor){
+        Cursor cursor = null;
+        SQLiteDatabase db = scanDBHelper.getReadableDatabase();
+        String[] projection = {
+                Constants.TABLE_VENDOR_ID,
+                Constants.TABLE_VENDOR_ID_VENDOR,
+                Constants.TABLE_VENDOR_VENDOR_NAME
+        };
+        String[] valuesWhere = {""+id_vendor};
+
+        cursor =db.query(
+                Constants.TABLE_VENDOR,
+                projection,
+                Constants.ID_VENDOR + " LIKE '%"+id_vendor+"%'",
+                null,
+                null,
+                null,
+                null
+        );
+
+        if (cursor!=null){
+            cursor.moveToFirst();
+        }
+        return cursor;
     }
 
 }

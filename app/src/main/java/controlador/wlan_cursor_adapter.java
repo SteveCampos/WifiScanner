@@ -37,8 +37,14 @@ public class wlan_cursor_adapter extends CursorAdapter{
         String ssid = cursor.getString(cursor.getColumnIndexOrThrow(Constants.SSID));
         //String ssid = "IMAGINE DRAGONS, AHORA BASTILLE";
         int level = cursor.getInt(cursor.getColumnIndexOrThrow(Constants.LEVEL));
-        String fabricante = "RUCKUS WIRELESS";
+        String id_vendor = cursor.getString(cursor.getColumnIndexOrThrow(Constants.ID_VENDOR));
 
+        Cursor cursorVendor = dbAdapter.getVendor(id_vendor);
+
+        String fabricante = "FABRICANTE DESCONOCIDO";
+        if (cursorVendor.getCount()>0){
+            fabricante = cursorVendor.getString(cursorVendor.getColumnIndexOrThrow(Constants.TABLE_VENDOR_VENDOR_NAME));
+        }
 
         TextView textViewSSID = (TextView) view.findViewById(R.id.textView_ssid);
         TextView textViewLevel = (TextView) view.findViewById(R.id.textView_level);

@@ -31,7 +31,16 @@ public interface Constants {
 
 
     public static final String DROP_TABLE_WLAN = "DROP TABLE IF EXISTS " + TABLE_NAME + ";";
-    public static final String DROP_TABLE_VENDOR = "DROP TABLE IF EXISTS " + "vendor" + ";";
+
+
+
+    public static final String TABLE_VENDOR = "vendor";
+    public static final String TABLE_VENDOR_ID = "_id";
+    public static final String TABLE_VENDOR_ID_VENDOR = "id_vendor";
+    public static final String TABLE_VENDOR_VENDOR_NAME = "vendor_name";
+
+    public static final String DROP_TABLE_VENDOR = "DROP TABLE IF EXISTS " + TABLE_VENDOR + ";";
+
 
 
 

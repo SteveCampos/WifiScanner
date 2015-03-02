@@ -53,11 +53,7 @@ public class scan_result extends Activity {
         wlanDB = new controller_wlan(this);
 
 
-        try {
             wlanDB.abrir();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
 
         try {
             vincular();

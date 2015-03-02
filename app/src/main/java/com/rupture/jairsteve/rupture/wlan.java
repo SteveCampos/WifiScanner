@@ -1,13 +1,19 @@
 package com.rupture.jairsteve.rupture;
 
 import android.app.Activity;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import org.w3c.dom.Text;
+
+import java.sql.SQLException;
+
 import controlador.controller_wlan;
+import modelo.Constants;
 import modelo.Wlan;
 
 
@@ -22,10 +28,9 @@ public class wlan extends Activity {
     TextView textView_frequency;
     ProgressBar progressBar_level;
     TextView textView_timestamp;
-    TextView textView_id_vendor;
-    TextView textView_wlanType;
     TextView textView_current;
-    TextView textView_password;
+    TextView textViewFabricante;
+    TextView textViewLevel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,16 +43,35 @@ public class wlan extends Activity {
 
         textView_ssid = (TextView) findViewById(R.id.textView_scan_result_ssid);
         progressBar_level = (ProgressBar) findViewById(R.id.progressBar_scan_result_signal);
-        textView_password = (TextView) findViewById(R.id.textView_scan_result_password);
-        textView_id_vendor = (TextView) findViewById(R.id.textView_scan_result_vendor);
-        textView_capabilities = (TextView) findViewById(R.id.textView_scan_result_capabilities);
+
+        textViewFabricante = (TextView) findViewById(R.id.textViewFabricante);
+        textView_bssid = (TextView) findViewById(R.id.textViewMac);
+        textView_capabilities = (TextView) findViewById(R.id.textViewCapabilities);
+        textView_frequency = (TextView) findViewById(R.id.textViewFrecuencia);
+        textViewLevel = (TextView) findViewById(R.id.textViewLevel);
+        textView_timestamp = (TextView) findViewById(R.id.textViewTimestamp);
+
+
+
+        String id_vendor = wlan.getId_vendor();
+
+        Cursor cursorVendor = wlanDB.getVendor(id_vendor);
+
+        String fabricante = "FABRICANTE DESCONOCIDO";
+        if (cursorVendor.getCount()>0){
+            fabricante = cursorVendor.getString(cursorVendor.getColumnIndexOrThrow(Constants.TABLE_VENDOR_VENDOR_NAME));
+        }
 
 
         textView_ssid.setText(wlan.getSsid());
-        progressBar_level.setProgress(100+wlan.getLevel());
-        textView_password.setText(wlan.getBssid());
-        textView_id_vendor.setText(wlan.getId_vendor());
-        textView_capabilities.setText(wlan.getCapabilities());
+        progressBar_level.setProgress(100 + wlan.getLevel());
+        textViewFabricante.setText(""+fabricante);
+        textView_bssid.setText(""+wlan.getBssid().toUpperCase());
+        textView_capabilities.setText(""+wlan.getCapabilities());
+        textView_frequency.setText(""+wlan.getFrequency() + " GHz");
+        int levelConvert  = wlan.getLevel() + 100;
+        textViewLevel.setText(""+levelConvert);
+        textView_timestamp.setText(""+wlan.getTimestamp());
 
     }
 

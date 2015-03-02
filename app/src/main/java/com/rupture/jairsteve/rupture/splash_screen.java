@@ -7,19 +7,23 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.graphics.Typeface;
 import android.net.wifi.ScanResult;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 
+import java.sql.SQLException;
 import java.util.List;
 
 import AsyncTask.AsyncTaskScan;
+import modelo.ScanDbHelper;
 import modelo.Wlan;
 import controlador.controller_wlan;
 
@@ -35,12 +39,13 @@ public class splash_screen extends Activity {
     private TextView textView_Splash_Screen_App_Name;
     private TextView textView_Splash_Screen_Developer_Name;
 
+    public ScanDbHelper dbHelperScan;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash_screen);
-
+        dbHelperScan = new ScanDbHelper(this);
         mainAtivity = this;
 
         Typeface typefaceMonserratBold = Typeface.createFromAsset(getAssets(), fontPathMonserratBold);
@@ -161,6 +166,7 @@ public class splash_screen extends Activity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        dbHelperScan.close();
         if (asyncTaskScan.isRegistedReceived()) {
             unregisterReceiver(asyncTaskScan.getScanResultBroadcastReceiver());
             Log.d("REGISTER RECEIVER","UNREGISTER RECEIVER");
@@ -187,6 +193,22 @@ public class splash_screen extends Activity {
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        dbHelperScan.close();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        try {
+            dbHelperScan.sobreEscribirDB();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     /*
