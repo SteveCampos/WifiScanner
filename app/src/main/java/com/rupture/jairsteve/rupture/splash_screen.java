@@ -199,7 +199,10 @@ public class splash_screen extends Activity {
     protected void onPause() {
         super.onPause();
         dbHelperScan.close();
+
     }
+
+
 
     @Override
     protected void onResume() {

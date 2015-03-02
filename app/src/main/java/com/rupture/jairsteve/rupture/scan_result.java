@@ -17,6 +17,7 @@ import android.widget.Toast;
 
 import java.sql.SQLException;
 
+import AsyncTask.AsyncTaskScan;
 import controlador.controller_wlan;
 import controlador.wlan_cursor_adapter;
 import modelo.Constants;

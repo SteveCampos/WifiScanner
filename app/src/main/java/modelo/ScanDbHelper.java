@@ -5,6 +5,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
+import android.widget.Toast;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -83,14 +84,14 @@ public class ScanDbHelper extends SQLiteOpenHelper {
 //de nuestra aplicación por lo que podremos sobreescribirla con nuestra base de datos.
             this.getReadableDatabase();
 
-            try {
+                try {
 
 
-                copyDataBase();
-                Log.d("DB", "COPIA LA BASE DE DATOS");
+                    copyDataBase();
+                    Log.d("DB", "COPIA LA BASE DE DATOS");
 
-            } catch (IOException e) {
-                throw new Error("Error copiando Base de Datos");
+                } catch (IOException e) {
+                    throw new Error("Error copiando Base de Datos");
             }
         }
 
@@ -109,9 +110,10 @@ public class ScanDbHelper extends SQLiteOpenHelper {
             String myPath = DB_PATH + DB_NAME;
             checkDB = SQLiteDatabase.openDatabase(myPath, null, SQLiteDatabase.OPEN_READONLY);
 
-        }catch(SQLiteException e){
+        }catch(Exception e){
 
-//si llegamos aqui es porque la base de datos no existe todavía.
+            Log.d("Exception OPEN", e.getMessage());
+            //si llegamos aqui es porque la base de datos no existe todavía.
 
         }
         if(checkDB != null){

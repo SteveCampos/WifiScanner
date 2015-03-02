@@ -92,13 +92,14 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="fill_parent"
-                        android:text="MAC"
+                        android:text="BSSID"
                         android:id="@+id/textView2"
                         android:layout_weight="1"
                         android:textSize="12sp"
                         android:textColor="@color/Dark1"
                         android:gravity="left|center_vertical"
-                        android:layout_marginLeft="12dp" />
+                        android:layout_marginLeft="12dp"
+                        android:textStyle="italic" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -108,7 +109,7 @@
                         android:layout_weight="1"
                         android:textIsSelectable="true"
                         android:textStyle="bold"
-                        android:textColor="@color/PersonalizadoSteve4"
+                        android:textColor="@color/Personalizado4"
                         android:gravity="center_vertical" />
                 </LinearLayout>
 
@@ -127,7 +128,8 @@
                         android:textSize="12sp"
                         android:textColor="@color/Dark1"
                         android:gravity="left|center_vertical"
-                        android:layout_marginLeft="12dp" />
+                        android:layout_marginLeft="12dp"
+                        android:textStyle="italic" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -136,7 +138,7 @@
                         android:id="@+id/textViewCapabilities"
                         android:textIsSelectable="true"
                         android:textStyle="bold"
-                        android:textColor="@color/PersonalizadoSteve4"
+                        android:textColor="@color/Personalizado4"
                         android:gravity="center_vertical|center" />
                 </LinearLayout>
 
@@ -156,7 +158,8 @@
                         android:textSize="12sp"
                         android:textColor="@color/Dark1"
                         android:gravity="left|center_vertical"
-                        android:layout_marginLeft="12dp" />
+                        android:layout_marginLeft="12dp"
+                        android:textStyle="italic" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -166,7 +169,7 @@
                         android:layout_weight="1"
                         android:textIsSelectable="true"
                         android:textStyle="bold"
-                        android:textColor="@color/PersonalizadoSteve4"
+                        android:textColor="@color/Personalizado4"
                         android:gravity="left|center_vertical|fill_vertical" />
                 </LinearLayout>
 
@@ -186,7 +189,8 @@
                         android:textSize="12sp"
                         android:textColor="@color/Dark1"
                         android:gravity="left|center_vertical"
-                        android:layout_marginLeft="12dp" />
+                        android:layout_marginLeft="12dp"
+                        android:textStyle="italic" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -196,7 +200,7 @@
                         android:layout_weight="1"
                         android:textIsSelectable="true"
                         android:textStyle="bold"
-                        android:textColor="@color/PersonalizadoSteve4"
+                        android:textColor="@color/Personalizado4"
                         android:gravity="left|center_vertical|fill_vertical" />
                 </LinearLayout>
 
@@ -216,7 +220,8 @@
                         android:textSize="12sp"
                         android:textColor="@color/Dark1"
                         android:gravity="left|center_vertical"
-                        android:layout_marginLeft="12dp" />
+                        android:layout_marginLeft="12dp"
+                        android:textStyle="italic" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -226,7 +231,7 @@
                         android:layout_weight="1"
                         android:textIsSelectable="true"
                         android:textStyle="bold"
-                        android:textColor="@color/PersonalizadoSteve4"
+                        android:textColor="@color/Personalizado4"
                         android:gravity="left|center_vertical|fill_vertical" />
                 </LinearLayout>
 
