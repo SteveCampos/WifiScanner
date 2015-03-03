@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.IntentFilter;
 import android.net.wifi.WifiManager;
 import android.os.AsyncTask;
@@ -11,6 +12,7 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.rupture.jairsteve.rupture.ScanResultBroadcastReceiver;
+import com.rupture.jairsteve.rupture.scan_result;
 
 import controlador.controller_wlan;
 import modelo.Wlan;
@@ -91,7 +93,6 @@ public class AsyncTaskScan extends AsyncTask<String, String, String> {
 
     @Override
     protected void onPostExecute(String s) {
-        super.onPostExecute(s);
     }
     public void showDialog(){
 

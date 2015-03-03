@@ -36,6 +36,7 @@ public class scan_result extends Activity {
     private ScanDbHelper scanDbHelper;
     private TextView textViewRedesDescubiertas;
     private Context context;
+    private TextView textViewReload;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,7 +45,17 @@ public class scan_result extends Activity {
         setContentView(R.layout.activity_scan_result);
 
         textViewRedesDescubiertas = (TextView) findViewById(R.id.textViewRedesDescubiertas);
+        textViewReload = (TextView) findViewById(R.id.textViewReload);
 
+
+        textViewReload.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(),splash_screen.class);
+                finish();
+                startActivity(intent);
+            }
+        });
 
 
         context = this;

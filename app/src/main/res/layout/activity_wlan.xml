@@ -11,13 +11,13 @@
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
                 android:gravity="center_horizontal|bottom"
-                android:layout_weight="2">
+                android:layout_weight="1">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/textView"
-                    android:background="@drawable/ic_wifi" />
+                    android:background="@drawable/ic_launcher_2" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -27,7 +27,8 @@
                     android:textStyle="bold"
                     android:textSize="32dp"
                     android:gravity="center"
-                    android:textColor="@color/PersonalizadoSteve2" />
+                    android:textColor="@color/PersonalizadoSteve2"
+                    android:layout_marginTop="16dp" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -41,28 +42,9 @@
                     android:layout_height="4dp"
                     android:id="@+id/progressBar_scan_result_signal"
                     android:layout_gravity="top|center_horizontal"
-                    style="?android:attr/progressBarStyleHorizontal"
+                    style="@android:style/Widget.Holo.Light.ProgressBar.Horizontal"
                     android:progress="50"
                     android:layout_marginTop="8dp" />
-            </LinearLayout>
-
-    <ScrollView
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:id="@+id/scrollView"
-        android:layout_weight="1">
-
-        <LinearLayout
-            android:orientation="vertical"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent">
-
-            <LinearLayout
-                android:orientation="vertical"
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
-                android:layout_weight="1"
-                android:layout_marginTop="4dp">
 
                 <LinearLayout
                     android:orientation="horizontal"
@@ -80,18 +62,40 @@
                         android:layout_weight="2"
                         android:gravity="center"
                         android:textColor="@color/azul"
-                        android:textStyle="bold" />
+                        android:textStyle="italic" />
                 </LinearLayout>
+            </LinearLayout>
+
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:id="@+id/scrollView"
+        android:layout_weight="1"
+        android:layout_marginTop="32dp">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent">
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_weight="1"
+                android:layout_marginTop="4dp">
 
                 <LinearLayout
                     android:orientation="horizontal"
                     android:layout_width="fill_parent"
-                    android:layout_height="36dp"
-                    android:gravity="center">
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:paddingTop="8dp"
+                    android:paddingBottom="8dp">
 
                     <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="fill_parent"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
                         android:text="BSSID"
                         android:id="@+id/textView2"
                         android:layout_weight="1"
@@ -102,56 +106,67 @@
                         android:textStyle="italic" />
 
                     <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="fill_parent"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
                         android:text="E8:94:F6:C2:5F:CE"
                         android:id="@+id/textViewMac"
                         android:layout_weight="1"
                         android:textIsSelectable="true"
-                        android:textStyle="bold"
                         android:textColor="@color/Personalizado4"
-                        android:gravity="center_vertical" />
+                        android:gravity="left|center_vertical"
+                        android:textStyle="italic"
+                        android:layout_marginLeft="10dp" />
                 </LinearLayout>
 
                 <LinearLayout
                     android:orientation="horizontal"
                     android:layout_width="fill_parent"
-                    android:layout_height="36dp"
+                    android:layout_height="wrap_content"
                     android:id="@+id/linearLayout7"
-                    android:gravity="center_vertical">
+                    android:gravity="center_vertical"
+                    android:layout_marginLeft="10dp"
+                    android:background="@drawable/border_bottom"
+                    android:paddingTop="8dp"
+                    android:paddingBottom="8dp">
 
                     <TextView
-                        android:layout_width="96dp"
-                        android:layout_height="fill_parent"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
                         android:text="Capabilities"
                         android:id="@+id/textView11"
                         android:textSize="12sp"
                         android:textColor="@color/Dark1"
                         android:gravity="left|center_vertical"
                         android:layout_marginLeft="12dp"
-                        android:textStyle="italic" />
+                        android:textStyle="italic"
+                        android:layout_weight="1" />
 
                     <TextView
-                        android:layout_width="wrap_content"
+                        android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
                         android:text="[WPA-PSKP-TKIP+CCMP]"
                         android:id="@+id/textViewCapabilities"
                         android:textIsSelectable="true"
-                        android:textStyle="bold"
                         android:textColor="@color/Personalizado4"
-                        android:gravity="center_vertical|center" />
+                        android:gravity="left|center_vertical|center"
+                        android:textStyle="italic"
+                        android:layout_weight="1" />
                 </LinearLayout>
 
                 <LinearLayout
                     android:orientation="horizontal"
                     android:layout_width="fill_parent"
-                    android:layout_height="36dp"
+                    android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:id="@+id/linearLayout2">
+                    android:id="@+id/linearLayout2"
+                    android:background="@drawable/layout_border_bottom"
+                    android:layout_marginLeft="10dp"
+                    android:paddingTop="8dp"
+                    android:paddingBottom="8dp">
 
                     <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="fill_parent"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
                         android:text="Frecuencia"
                         android:id="@+id/textView4"
                         android:layout_weight="1"
@@ -162,27 +177,31 @@
                         android:textStyle="italic" />
 
                     <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="fill_parent"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
                         android:text="2400 GHz"
                         android:id="@+id/textViewFrecuencia"
                         android:layout_weight="1"
                         android:textIsSelectable="true"
-                        android:textStyle="bold"
                         android:textColor="@color/Personalizado4"
-                        android:gravity="left|center_vertical|fill_vertical" />
+                        android:gravity="left|center_vertical|fill_vertical"
+                        android:textStyle="italic" />
                 </LinearLayout>
 
                 <LinearLayout
                     android:orientation="horizontal"
                     android:layout_width="fill_parent"
-                    android:layout_height="36dp"
+                    android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:id="@+id/linearLayout3">
+                    android:id="@+id/linearLayout3"
+                    android:background="@drawable/layout_border_bottom"
+                    android:layout_marginLeft="10dp"
+                    android:paddingTop="8dp"
+                    android:paddingBottom="8dp">
 
                     <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="fill_parent"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
                         android:text="Level"
                         android:id="@+id/textView7"
                         android:layout_weight="1"
@@ -193,27 +212,29 @@
                         android:textStyle="italic" />
 
                     <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="fill_parent"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
                         android:text="88"
                         android:id="@+id/textViewLevel"
                         android:layout_weight="1"
                         android:textIsSelectable="true"
-                        android:textStyle="bold"
                         android:textColor="@color/Personalizado4"
-                        android:gravity="left|center_vertical|fill_vertical" />
+                        android:gravity="left|center_vertical|fill_vertical"
+                        android:textStyle="italic" />
                 </LinearLayout>
 
                 <LinearLayout
                     android:orientation="horizontal"
                     android:layout_width="fill_parent"
-                    android:layout_height="36dp"
+                    android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:id="@+id/linearLayout4" >
+                    android:id="@+id/linearLayout4"
+                    android:paddingTop="8dp"
+                    android:paddingBottom="8dp">
 
                     <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="fill_parent"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
                         android:text="Timestamp"
                         android:id="@+id/textView9"
                         android:layout_weight="1"
@@ -224,15 +245,15 @@
                         android:textStyle="italic" />
 
                     <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="fill_parent"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
                         android:text="985689547258684"
                         android:id="@+id/textViewTimestamp"
                         android:layout_weight="1"
                         android:textIsSelectable="true"
-                        android:textStyle="bold"
                         android:textColor="@color/Personalizado4"
-                        android:gravity="left|center_vertical|fill_vertical" />
+                        android:gravity="left|center_vertical|fill_vertical"
+                        android:textStyle="italic" />
                 </LinearLayout>
 
             </LinearLayout>

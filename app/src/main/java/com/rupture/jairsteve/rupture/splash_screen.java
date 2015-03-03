@@ -60,6 +60,7 @@ public class splash_screen extends Activity {
        asyncTaskScan.execute();
 
 
+
         Log.d("UI"," CREA LA UI");
         //wlanDB.deleteWlan();
 /*

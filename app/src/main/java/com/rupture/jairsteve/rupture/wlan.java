@@ -2,6 +2,7 @@ package com.rupture.jairsteve.rupture;
 
 import android.app.Activity;
 import android.database.Cursor;
+import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -44,12 +45,14 @@ public class wlan extends Activity {
         textView_ssid = (TextView) findViewById(R.id.textView_scan_result_ssid);
         progressBar_level = (ProgressBar) findViewById(R.id.progressBar_scan_result_signal);
 
+
         textViewFabricante = (TextView) findViewById(R.id.textViewFabricante);
         textView_bssid = (TextView) findViewById(R.id.textViewMac);
         textView_capabilities = (TextView) findViewById(R.id.textViewCapabilities);
         textView_frequency = (TextView) findViewById(R.id.textViewFrecuencia);
         textViewLevel = (TextView) findViewById(R.id.textViewLevel);
         textView_timestamp = (TextView) findViewById(R.id.textViewTimestamp);
+
 
 
 
@@ -65,10 +68,11 @@ public class wlan extends Activity {
 
         textView_ssid.setText(wlan.getSsid());
         progressBar_level.setProgress(100 + wlan.getLevel());
+
         textViewFabricante.setText(""+fabricante);
         textView_bssid.setText(""+wlan.getBssid().toUpperCase());
         textView_capabilities.setText(""+wlan.getCapabilities());
-        textView_frequency.setText(""+wlan.getFrequency() + " GHz");
+        textView_frequency.setText(""+wlan.getFrequency() + " MHz");
         int levelConvert  = wlan.getLevel() + 100;
         textViewLevel.setText(""+levelConvert);
         textView_timestamp.setText(""+wlan.getTimestamp());
