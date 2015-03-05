@@ -1,12 +1,21 @@
 package com.rupture.jairsteve.rupture;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.WindowManager;
+import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -34,6 +43,8 @@ public class wlan extends Activity {
     TextView textView_current;
     TextView textViewFabricante;
     TextView textViewLevel;
+    String password;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,8 +96,9 @@ public class wlan extends Activity {
                 Log.d("FUCK YEAH", "TENEMOS LA CONTRASEÑA");
 
                 controller_wlan_metods c = new controller_wlan_metods();
-                String contrase = c.getPassword(wlan.getSsid(), wlan.getBssid(), fabricante);
-                Log.d("FUCKING JODIDAMENTE YEAH", contrase);
+                password = c.getPassword(wlan.getSsid(), wlan.getBssid(), fabricante);
+                Log.d("FUCKING JODIDAMENTE YEAH", password);
+                dialogFuckYeah().show();
             }
         }
 
@@ -111,5 +123,15 @@ public class wlan extends Activity {
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+    private Dialog dialogFuckYeah() {
+        final View layout = View.inflate(this, R.layout.fuck_yeah, null);
+        final TextView textViewPassword = ((TextView) layout.findViewById(R.id.textViewPassword));
+        textViewPassword.setText(""+password);
+        final AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        //builder.setTitle("Fuck Yeah!");
+        builder.setView(layout);
+        final AlertDialog alertDialog = builder.create();
+        return alertDialog;
     }
 }

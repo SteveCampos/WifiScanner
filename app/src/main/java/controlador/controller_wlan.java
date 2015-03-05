@@ -425,7 +425,7 @@ public class controller_wlan {
         int registros = mDb.update(Constants.TABLE_NAME, toZero,null,null);
 
 
-        Log.d("REGISTROS NO PRESENTES EN EL SCANEO ACTUAL  ", ""+registros);
+        Log.d("REGISTROS CHANGE TO ZERO ", ""+registros);
         ContentValues initialValues = new ContentValues();
         initialValues.put(Constants.CURRENT,1);
 
@@ -433,16 +433,16 @@ public class controller_wlan {
         for (int i=0; i<id.length; i++){
             if (i==id.length-1)
             {
-                signosInterrogacion+= "?";
+                signosInterrogacion+= " ? ";
             }else {
-                signosInterrogacion+= "? OR ";
+                signosInterrogacion+= " ? OR "+ Constants.ID_WLAN+" = ";
             }
 
         }
 
         Log.d("SIGNOS INTERROGACIÓN", signosInterrogacion);
         int cantidadRegistros = mDb.update(Constants.TABLE_NAME, initialValues,
-                Constants.ID_WLAN+" = ( "+ signosInterrogacion + " )",id);
+                Constants.ID_WLAN+" = "+ signosInterrogacion + " ",id);
 
 
         Log.d("REGISTROS EN EL SCANEO ACTUAL  ", ""+cantidadRegistros);

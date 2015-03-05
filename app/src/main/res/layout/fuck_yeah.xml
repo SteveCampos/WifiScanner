@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:gravity="center"
+        android:layout_weight="1">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="¡FUCK YEAH!"
+            android:id="@+id/idFuck"
+            android:textSize="24sp"
+            android:textStyle="bold|italic"
+            android:textColor="@color/Personalizado4" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:gravity="center"
+        android:layout_weight="8">
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:text="T6470028C6DA4"
+            android:id="@+id/textViewPassword"
+            android:gravity="center"
+            android:drawableRight="@drawable/ic_password"
+            android:paddingRight="8dp"
+            android:paddingLeft="8dp"
+            android:textSize="16sp"
+            android:textStyle="bold|italic"
+            android:textColor="@color/Dark5"
+            android:background="@color/Personalizado3"
+            android:textIsSelectable="true" />
+    </LinearLayout>
+</LinearLayout>
