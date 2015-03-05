@@ -42,6 +42,9 @@ public class wlan_cursor_adapter extends CursorAdapter{
         int current = cursor.getInt(cursor.getColumnIndexOrThrow(Constants.CURRENT));
 
 
+        if (ssid.length()==0){
+            ssid = "RED OCULTA";
+        }
 
         Cursor cursorVendor = dbAdapter.getVendor(id_vendor);
 

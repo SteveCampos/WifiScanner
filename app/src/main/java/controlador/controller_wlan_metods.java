@@ -83,7 +83,7 @@ public class controller_wlan_metods {
     }
 
 
-    public String concatPassword(String ssid, String BSSID, String vendor_name){
+    public String getPassword(String ssid, String BSSID, String vendor_name){
 
 
         String first_letter_vendor = (""+vendor_name.charAt(0)).toUpperCase();

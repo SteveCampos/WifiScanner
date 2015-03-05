@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.database.Cursor;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ProgressBar;
@@ -14,6 +15,7 @@ import org.w3c.dom.Text;
 import java.sql.SQLException;
 
 import controlador.controller_wlan;
+import controlador.controller_wlan_metods;
 import modelo.Constants;
 import modelo.Wlan;
 
@@ -76,6 +78,18 @@ public class wlan extends Activity {
         int levelConvert  = wlan.getLevel() + 100;
         textViewLevel.setText(""+levelConvert);
         textView_timestamp.setText(""+wlan.getTimestamp());
+
+        if(wlan.getWlan_type()==1){
+            Log.d("YEAH", "ES UNA WLAN_XXXX");
+            if(!fabricante.equals("FABRICANTE DESCONOCIDO")){
+                Log.d("FUCK YEAH", "TENEMOS LA CONTRASEÑA");
+
+                controller_wlan_metods c = new controller_wlan_metods();
+                String contrase = c.getPassword(wlan.getSsid(), wlan.getBssid(), fabricante);
+                Log.d("FUCKING JODIDAMENTE YEAH", contrase);
+            }
+        }
+
 
     }
 
