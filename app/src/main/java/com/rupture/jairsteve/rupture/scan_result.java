@@ -98,7 +98,7 @@ public class scan_result extends Activity {
     public void vincular() throws SQLException {
         cursor = wlanDB.readWlan();
         textViewRedesDescubiertas.setText(""+cursor.getCount());
-        startManagingCursor(cursor);
+        //startManagingCursor(cursor);
         wlanCursorAdapter = new wlan_cursor_adapter(this, cursor);
         lista.setAdapter(wlanCursorAdapter);
 

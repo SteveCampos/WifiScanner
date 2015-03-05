@@ -74,15 +74,37 @@ public class controller_wlan_metods {
         return twoMiddleDigits;
     }
 
-    public String concatPassword(String first_letter_vendor, String first_six_digits, String middle_two_digits, String last_four_digits){
-        return first_letter_vendor + first_six_digits + middle_two_digits + last_four_digits;
+    public String obtain_sixFirstDigits(String splitMac){
+        String sixFirstDigits="";
+        for (int i = 0; i <=5 ; i++) {
+            sixFirstDigits+=splitMac.charAt(i);
+        }
+        return sixFirstDigits;
     }
+
+
+    public String concatPassword(String ssid, String BSSID, String vendor_name){
+
+
+        String first_letter_vendor = (""+vendor_name.charAt(0)).toUpperCase();
+        String splitBSSID = obtain_splitBssid(BSSID);
+
+        String first_six_digits = obtain_sixFirstDigits(splitBSSID);
+        String middle_two_digits = obtain_twoMiddleDitigs(splitBSSID) ;
+        String last_four_digits = obtain_ssidLastFourDigits(ssid);
+
+
+        return first_letter_vendor+first_six_digits+middle_two_digits+last_four_digits;
+
+    }
+
+
 
     public int obtain_tipoWlan(String ssid){
 
         if (ssid.length()<=0){
             return 0;
-        }else{
+        }else {
 
         String model = "WLAN";
         String ssidFourDigits = "";
@@ -102,5 +124,7 @@ public class controller_wlan_metods {
         return tipoWlan;
         }
     }
+
+
 
 }

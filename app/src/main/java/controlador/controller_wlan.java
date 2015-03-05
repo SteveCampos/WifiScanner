@@ -265,10 +265,8 @@ public class controller_wlan {
     }
 
 
-    public int updateWlan(int id){
-
-        SQLiteDatabase db = scanDBHelper.getReadableDatabase();
-
+    public int updateWlan(Wlan wlan, int id){
+/*
         String[] projection = {
                 Constants.ID_WLAN,
                 Constants.BSSID,
@@ -331,8 +329,54 @@ public class controller_wlan {
         values.put(Constants.TIMESTAMP, timestamp); // EL TIEMPO EN QUE SE MANDAN LOS PAQUETES CREOO XD
         values.put(Constants.WLAN_TYPE, wlan_type); // EL TIEMPO EN QUE SE MANDAN LOS PAQUETES CREOO XD
         values.put(Constants.CURRENT, current);
+*/
+        Log.d("DB", "OBTENIENDO LOS DATOS DE LA TABLA WLAN");
+        String bssid = wlan.getBssid();
+        Log.d("INSERT BSSID", bssid);
+        String ssid = wlan.getSsid();
+        Log.d("INSERT SSID", ssid);
+        String capabilities = wlan.getCapabilities();
+        Log.d("INSERT CAPABILITIES", capabilities);
+        int frequency = wlan.getFrequency();
+        int level = wlan.getLevel();
+        int timestamp = wlan.getTimestamp();
+        int current = wlan.getCurrent();
+
+        String id_vendor = metods.obtain_idVendor(bssid);
+        int wlan_type = metods.obtain_tipoWlan(ssid);
+
+        String splitBssid = metods.obtain_splitBssid(bssid);
+
+        //String name_vendor = vendor.getVendorForID(id_vendor);
+        String twoMiddleDigits = metods.obtain_twoMiddleDitigs(splitBssid);
+        String fourLastDigits = metods.obtain_ssidLastFourDigits(ssid);
+
+        //OBTENGO LA BASE DE DATOS EN MODO ESCRIBIBLE
+        Log.d("DB", "OBTENIENDO DB EN MODO ESCRIBIBLE...");
+        SQLiteDatabase db = scanDBHelper.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(Constants.BSSID, bssid); // BSSID (MAC)
+        values.put(Constants.SSID, ssid); // SSID (WLAN NAME)
+        values.put(Constants.CAPABILITIES, capabilities); // CAPABILITIES (PROTECTION)
+        values.put(Constants.FREQUENCY, frequency); // FREQUENCY (2.4Ghz)
+        values.put(Constants.LEVEL, level); // LEVEL (SIGNAL 0 -100)
+        values.put(Constants.TIMESTAMP, timestamp); // EL TIEMPO EN QUE SE MANDAN LOS PAQUETES CREOO XD
+        values.put(Constants.CURRENT, current); // 1 SI EL REGISTRO ES DEL SCANEO ACTUAL Y 0 SI ES DE UN SCANEO PASADO
+
+        values.put(Constants.ID_VENDOR, id_vendor); // ID_VENDOR (PRIMEROS 6 DÍGITOS DE LA MAC)
+        values.put(Constants.WLAN_TYPE, wlan_type);
 
 
+
+        String columnsNull[] = {Constants.PASSWORD};
+        /*
+        if(name_vendor!=null) {
+            String firstLetter = ""+name_vendor.charAt(0);
+            String password = firstLetter + id_vendor + twoMiddleDigits + fourLastDigits;
+            values.put(Constants.red_wlan._COLUMN_NAME_PASSWORD, password ); // VENDOR FIRST LETTER + (ID_VENDOR)MAC REAL 6 DIGITS + 2 DIGITS NEXT + 4 DIGITS TO WLAN
+        }
+        */
 // Which row to update, based on the ID
         String selection = Constants.ID_WLAN + " LIKE ?";
         String[] selectionArgs = { String.valueOf(id) };
@@ -370,6 +414,38 @@ public class controller_wlan {
             cursor.moveToFirst();
         }
         return cursor;
+    }
+
+    public void changeCurrent(String[] id){
+
+        SQLiteDatabase mDb = scanDBHelper.getWritableDatabase();
+        ContentValues toZero = new ContentValues();
+        toZero.put(Constants.CURRENT,0);
+
+        int registros = mDb.update(Constants.TABLE_NAME, toZero,null,null);
+
+
+        Log.d("REGISTROS NO PRESENTES EN EL SCANEO ACTUAL  ", ""+registros);
+        ContentValues initialValues = new ContentValues();
+        initialValues.put(Constants.CURRENT,1);
+
+        String signosInterrogacion = "";
+        for (int i=0; i<id.length; i++){
+            if (i==id.length-1)
+            {
+                signosInterrogacion+= "?";
+            }else {
+                signosInterrogacion+= "? OR ";
+            }
+
+        }
+
+        Log.d("SIGNOS INTERROGACIÓN", signosInterrogacion);
+        int cantidadRegistros = mDb.update(Constants.TABLE_NAME, initialValues,
+                Constants.ID_WLAN+" = ( "+ signosInterrogacion + " )",id);
+
+
+        Log.d("REGISTROS EN EL SCANEO ACTUAL  ", ""+cantidadRegistros);
     }
 
 }

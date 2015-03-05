@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CursorAdapter;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -38,6 +39,9 @@ public class wlan_cursor_adapter extends CursorAdapter{
         //String ssid = "IMAGINE DRAGONS, AHORA BASTILLE";
         int level = cursor.getInt(cursor.getColumnIndexOrThrow(Constants.LEVEL));
         String id_vendor = cursor.getString(cursor.getColumnIndexOrThrow(Constants.ID_VENDOR));
+        int current = cursor.getInt(cursor.getColumnIndexOrThrow(Constants.CURRENT));
+
+
 
         Cursor cursorVendor = dbAdapter.getVendor(id_vendor);
 
@@ -49,6 +53,15 @@ public class wlan_cursor_adapter extends CursorAdapter{
         TextView textViewSSID = (TextView) view.findViewById(R.id.textView_ssid);
         TextView textViewLevel = (TextView) view.findViewById(R.id.textView_level);
         TextView textViewFabricante = (TextView) view.findViewById(R.id.textView_fabricante);
+        LinearLayout linearLayoutDetail = (LinearLayout) view.findViewById(R.id.linearLayoutDetail);
+        if (current==0){
+            linearLayoutDetail.setAlpha((float) 0.3);
+        }else if (current==1){
+            linearLayoutDetail.setAlpha(1);
+        }else{
+            linearLayoutDetail.setAlpha((float) 0.3);
+        }
+
 
         int convertLevel =convertLevel(level);
 
