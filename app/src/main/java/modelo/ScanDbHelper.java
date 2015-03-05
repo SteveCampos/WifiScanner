@@ -1,12 +1,14 @@
 package modelo;
 
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 import android.widget.Toast;
 
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -48,11 +50,11 @@ public class ScanDbHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
         //sqLiteDatabase.execSQL(CREATE_STRUCTURE_DATABASE);
         Log.d("DB", " ON CREATE");
-        try {
+        /*try {
             sobreEscribirDB();
         } catch (SQLException e) {
             e.printStackTrace();
-        }
+        }*/
 
     }
 
@@ -60,9 +62,9 @@ public class ScanDbHelper extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i2) {
 
         Log.d("DB", " ON UPGRADE");
-        sqLiteDatabase.execSQL(DROP_TABLE_WLAN);
+        //sqLiteDatabase.execSQL(DROP_TABLE_WLAN);
         //sqLiteDatabase.execSQL(DELETE_TABLE_VENDOR);
-        onCreate(sqLiteDatabase);
+        /*onCreate(sqLiteDatabase);*/
 
     }
 
@@ -103,6 +105,10 @@ public class ScanDbHelper extends SQLiteOpenHelper {
      */
     private boolean checkDataBase(){
 
+
+        File dbFile = myContext.getDatabasePath(DB_NAME);
+        return dbFile.exists();
+        /*
         SQLiteDatabase checkDB = null;
 
         try{
@@ -110,7 +116,7 @@ public class ScanDbHelper extends SQLiteOpenHelper {
             String myPath = DB_PATH + DB_NAME;
             checkDB = SQLiteDatabase.openDatabase(myPath, null, SQLiteDatabase.OPEN_READONLY);
 
-        }catch(Exception e){
+        }catch(SQLiteException e){
 
             Log.d("Exception OPEN", e.getMessage());
             //si llegamos aqui es porque la base de datos no existe todavía.
@@ -121,7 +127,7 @@ public class ScanDbHelper extends SQLiteOpenHelper {
             checkDB.close();
 
         }
-        return checkDB != null ? true : false;
+        return checkDB != null ? true : false;*/
     }
 
     /**
@@ -180,6 +186,37 @@ public class ScanDbHelper extends SQLiteOpenHelper {
         super.close();
     }
 
+    public Cursor readVendor(){
+
+        Cursor cursor;
+        Log.d("DB", " READWLAN...");
+        myDataBase= this.getReadableDatabase();
+
+        // Define a projection that specifies which columns from the database
+        // you will actually use after this query.
+        String[] projection = {
+                Constants.TABLE_VENDOR_ID,
+                Constants.TABLE_VENDOR_ID_VENDOR,
+                Constants.TABLE_VENDOR_VENDOR_NAME,
+        };
+
+        String[] valuesWhere = {"5"};
+        //OBTENIENDO LA CONSULTA
+
+        cursor= myDataBase.query(
+                Constants.TABLE_VENDOR,             // The table to query
+                projection,                               // The columns to return
+                "_id < ?",                                     // The columns for the WHERE clause
+                valuesWhere,                                   // The values for the WHERE clause
+                null,                                     // don't group the rows
+                null,                                     // don't filter by row groups
+                null                                     // The sort order
+        );
+
+        //db.close();
+
+        return cursor;
+    }
 
 
 }

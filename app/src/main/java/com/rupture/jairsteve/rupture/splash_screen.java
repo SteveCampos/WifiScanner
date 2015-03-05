@@ -12,6 +12,7 @@ import android.database.Cursor;
 import android.graphics.Typeface;
 import android.net.wifi.ScanResult;
 import android.net.wifi.WifiManager;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
@@ -48,6 +49,12 @@ public class splash_screen extends Activity {
         dbHelperScan = new ScanDbHelper(this);
         mainAtivity = this;
 
+
+
+        //Cursor cursor = dbHelperScan.readVendor();
+
+
+
         Typeface typefaceMonserratBold = Typeface.createFromAsset(getAssets(), fontPathMonserratBold);
         //CAMBIAR ESTILO DE FUENTE A MONTSERRAT( se ve más cool)
         textView_Splash_Screen_App_Name = (TextView) findViewById(R.id.textView_Splash_Screen_App_Name);
@@ -56,10 +63,8 @@ public class splash_screen extends Activity {
         textView_Splash_Screen_Developer_Name.setTypeface(typefaceMonserratBold);
 
 
-       asyncTaskScan = new AsyncTaskScan(mainAtivity);
-       asyncTaskScan.execute();
 
-
+        new OverrideDB().execute();
 
         Log.d("UI"," CREA LA UI");
         //wlanDB.deleteWlan();
@@ -214,6 +219,34 @@ public class splash_screen extends Activity {
             e.printStackTrace();
         }
     }
+
+class OverrideDB extends AsyncTask<String, String, String>{
+
+    @Override
+    protected String doInBackground(String... strings) {
+        try {
+            dbHelperScan.sobreEscribirDB();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    @Override
+    protected void onPreExecute() {
+        super.onPreExecute();
+    }
+
+    @Override
+    protected void onPostExecute(String s) {
+        super.onPostExecute(s);
+
+        asyncTaskScan = new AsyncTaskScan(mainAtivity);
+        asyncTaskScan.execute();
+
+    }
+}
+
 
     /*
     public void ShowWlan(Cursor cursor){

@@ -80,6 +80,10 @@ public class controller_wlan_metods {
 
     public int obtain_tipoWlan(String ssid){
 
+        if (ssid.length()<=0){
+            return 0;
+        }else{
+
         String model = "WLAN";
         String ssidFourDigits = "";
         for (int i = 0; i < 4 ; i++) {
@@ -96,6 +100,7 @@ public class controller_wlan_metods {
         }
 
         return tipoWlan;
+        }
     }
 
 }
