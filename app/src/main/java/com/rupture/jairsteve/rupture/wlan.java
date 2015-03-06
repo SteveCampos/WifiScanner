@@ -13,11 +13,14 @@ import android.provider.Settings;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.ContextThemeWrapper;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
 import android.view.WindowManager;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -135,17 +138,17 @@ public class wlan extends Activity {
         final TextView textViewBitches = ((TextView) layout.findViewById(R.id.idFuck));
 
 
-        textViewPassword.setText(""+password);
+        textViewPassword.setText(""+password.toUpperCase());
         textViewBitches.setText("¡Fuck Yeah\nBitches!");
         textViewPassword.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if(android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.HONEYCOMB) {
                     android.text.ClipboardManager clipboard = (android.text.ClipboardManager) getSystemService(mainActivity.CLIPBOARD_SERVICE);
-                    clipboard.setText(password);
+                    clipboard.setText(password.toUpperCase());
                 } else {
                     android.content.ClipboardManager clipboard = (android.content.ClipboardManager) getSystemService(mainActivity.CLIPBOARD_SERVICE);
-                    android.content.ClipData clip = android.content.ClipData.newPlainText("Copied Text", password);
+                    android.content.ClipData clip = android.content.ClipData.newPlainText("Copied Text", password.toUpperCase());
                     clipboard.setPrimaryClip(clip);
                 }
                 Toast.makeText(mainActivity.getApplicationContext(), "Copiado al portapapeles", Toast.LENGTH_LONG).show();
@@ -156,6 +159,10 @@ public class wlan extends Activity {
         //builder.setTitle("Fuck Yeah!");
         builder.setView(layout);
         final AlertDialog alertDialog = builder.create();
+        //alertDialog.setInverseBackgroundForced(true);
+        //alertDialog.setIcon(mainActivity.getResources().getDrawable(R.drawable.ic_launcher));
+        //alertDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        //alertDialog.getWindow().setLayout(WindowManager.LayoutParams.FILL_PARENT, LinearLayout.LayoutParams.FILL_PARENT);
         return alertDialog;
     }
 }
