@@ -3,11 +3,13 @@ package com.rupture.jairsteve.rupture;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.ClipboardManager;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -18,6 +20,7 @@ import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.w3c.dom.Text;
 
@@ -44,6 +47,7 @@ public class wlan extends Activity {
     TextView textViewFabricante;
     TextView textViewLevel;
     String password;
+    private Activity mainActivity;
 
 
     @Override
@@ -51,6 +55,7 @@ public class wlan extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_wlan);
 
+        mainActivity = this;
         wlanDB = new controller_wlan(this);
         long id = getIntent().getLongExtra("id", 1);
         wlan = wlanDB.getWlanForID(id);
@@ -127,7 +132,26 @@ public class wlan extends Activity {
     private Dialog dialogFuckYeah() {
         final View layout = View.inflate(this, R.layout.fuck_yeah, null);
         final TextView textViewPassword = ((TextView) layout.findViewById(R.id.textViewPassword));
+        final TextView textViewBitches = ((TextView) layout.findViewById(R.id.idFuck));
+
+
         textViewPassword.setText(""+password);
+        textViewBitches.setText("¡Fuck Yeah\nBitches!");
+        textViewPassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.HONEYCOMB) {
+                    android.text.ClipboardManager clipboard = (android.text.ClipboardManager) getSystemService(mainActivity.CLIPBOARD_SERVICE);
+                    clipboard.setText(password);
+                } else {
+                    android.content.ClipboardManager clipboard = (android.content.ClipboardManager) getSystemService(mainActivity.CLIPBOARD_SERVICE);
+                    android.content.ClipData clip = android.content.ClipData.newPlainText("Copied Text", password);
+                    clipboard.setPrimaryClip(clip);
+                }
+                Toast.makeText(mainActivity.getApplicationContext(), "Copiado al portapapeles", Toast.LENGTH_LONG).show();
+                mainActivity.startActivity(new Intent(Settings.ACTION_WIFI_SETTINGS));
+            }
+        });
         final AlertDialog.Builder builder = new AlertDialog.Builder(this);
         //builder.setTitle("Fuck Yeah!");
         builder.setView(layout);

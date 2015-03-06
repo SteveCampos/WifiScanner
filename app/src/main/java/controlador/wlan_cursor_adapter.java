@@ -43,7 +43,7 @@ public class wlan_cursor_adapter extends CursorAdapter{
 
 
         if (ssid.length()==0){
-            ssid = "RED OCULTA";
+            //ssid = "RED OCULTA";
         }
 
         Cursor cursorVendor = dbAdapter.getVendor(id_vendor);
