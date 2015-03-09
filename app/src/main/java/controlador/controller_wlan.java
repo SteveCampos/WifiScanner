@@ -415,6 +415,21 @@ public class controller_wlan {
         }
         return cursor;
     }
+    public Cursor getRealVendor(String falseOUI){
+
+        SQLiteDatabase db = scanDBHelper.getReadableDatabase();
+        Cursor cursor =db.rawQuery(" SELECT real, vendor_name \n" +
+                "FROM oui \n" +
+                "INNER JOIN vendor \n" +
+                "ON vendor.id_vendor = oui.real \n" +
+                "WHERE false LIKE '%"+falseOUI+"%' ",null);
+
+        if (cursor!=null){
+            cursor.moveToFirst();
+        }
+        return cursor;
+    }
+
 
     public void changeCurrent(String[] id){
 

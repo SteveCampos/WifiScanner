@@ -47,10 +47,14 @@ public class wlan_cursor_adapter extends CursorAdapter{
         }
 
         Cursor cursorVendor = dbAdapter.getVendor(id_vendor);
+        Cursor cursorRealVendor = dbAdapter.getRealVendor(id_vendor);
 
         String fabricante = "FABRICANTE DESCONOCIDO";
         if (cursorVendor.getCount()>0){
             fabricante = cursorVendor.getString(cursorVendor.getColumnIndexOrThrow(Constants.TABLE_VENDOR_VENDOR_NAME));
+        }else if (cursorRealVendor.getCount()>0){
+            fabricante = cursorRealVendor.getString(cursorRealVendor.getColumnIndexOrThrow(Constants.TABLE_VENDOR_VENDOR_NAME));
+            id_vendor = cursorRealVendor.getString(cursorRealVendor.getColumnIndexOrThrow("real"));
         }
 
         TextView textViewSSID = (TextView) view.findViewById(R.id.textView_ssid);

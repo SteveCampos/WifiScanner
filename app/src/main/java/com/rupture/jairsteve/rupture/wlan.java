@@ -80,11 +80,18 @@ public class wlan extends Activity {
         String id_vendor = wlan.getId_vendor();
 
         Cursor cursorVendor = wlanDB.getVendor(id_vendor);
+        Cursor cursorRealVendor = wlanDB.getRealVendor(id_vendor);
+
 
         String fabricante = "FABRICANTE DESCONOCIDO";
         if (cursorVendor.getCount()>0){
             fabricante = cursorVendor.getString(cursorVendor.getColumnIndexOrThrow(Constants.TABLE_VENDOR_VENDOR_NAME));
+        }else if (cursorRealVendor.getCount()>0){
+            fabricante = cursorRealVendor.getString(cursorRealVendor.getColumnIndexOrThrow(Constants.TABLE_VENDOR_VENDOR_NAME));
+            id_vendor = cursorRealVendor.getString(cursorRealVendor.getColumnIndexOrThrow("real"));
         }
+
+
 
 
         textView_ssid.setText(wlan.getSsid());
@@ -104,7 +111,7 @@ public class wlan extends Activity {
                 Log.d("FUCK YEAH", "TENEMOS LA CONTRASEÑA");
 
                 controller_wlan_metods c = new controller_wlan_metods();
-                password = c.getPassword(wlan.getSsid(), wlan.getBssid(), fabricante);
+                password = c.getPassword(wlan.getSsid(),id_vendor, wlan.getBssid(), fabricante);
                 Log.d("FUCKING JODIDAMENTE YEAH", password);
                 dialogFuckYeah().show();
             }

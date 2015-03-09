@@ -83,18 +83,17 @@ public class controller_wlan_metods {
     }
 
 
-    public String getPassword(String ssid, String BSSID, String vendor_name){
+    public String getPassword(String ssid, String id_vendor, String BSSID, String vendor_name){
 
 
         String first_letter_vendor = (""+vendor_name.charAt(0)).toUpperCase();
         String splitBSSID = obtain_splitBssid(BSSID);
 
-        String first_six_digits = obtain_sixFirstDigits(splitBSSID);
         String middle_two_digits = obtain_twoMiddleDitigs(splitBSSID) ;
         String last_four_digits = obtain_ssidLastFourDigits(ssid);
 
 
-        return first_letter_vendor+first_six_digits+middle_two_digits+last_four_digits;
+        return first_letter_vendor+id_vendor+middle_two_digits+last_four_digits;
 
     }
 
