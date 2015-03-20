@@ -29,7 +29,7 @@
                 android:textSize="16sp"
                 android:textStyle="bold|italic"
                 android:textColor="@color/Dark1"
-                android:drawableRight="@drawable/ic_action_reload"
+                android:drawableRight="@drawable/ic_action_refresh"
                 />
 
         </LinearLayout>

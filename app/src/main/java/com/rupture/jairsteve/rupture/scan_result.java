@@ -12,6 +12,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -43,6 +44,10 @@ public class scan_result extends Activity {
         Log.d("INTENT", "CLASE SCAN RESULT INICIADA");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_scan_result);
+        context = this;
+
+        wlanDB = new controller_wlan(this);
+        wlanDB.abrir();
 
         textViewRedesDescubiertas = (TextView) findViewById(R.id.textViewRedesDescubiertas);
         textViewReload = (TextView) findViewById(R.id.textViewReload);
@@ -58,10 +63,39 @@ public class scan_result extends Activity {
         });
 
 
+        lista = (ListView) findViewById(R.id.listViewScan);
+
+
+        cursor = wlanDB.readWlan();
+        textViewRedesDescubiertas.setText(""+cursor.getCount());
+
+        wlanCursorAdapter = new wlan_cursor_adapter(this, cursor, true);
+        lista.setAdapter(wlanCursorAdapter);
+
+
+        lista.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view,
+                                    int position, long id) {
+
+                Cursor cursor = (Cursor) parent.getItemAtPosition(position);
+
+                String ssid = cursor.getString(cursor.getColumnIndexOrThrow(Constants.SSID));
+                Toast.makeText(getApplicationContext(),
+                        "" +ssid, Toast.LENGTH_LONG)
+                        .show();
+                Intent intent = new Intent(context, wlan.class);
+                intent.putExtra("id",id);
+                startActivity(intent);
+            }
+
+        });
+
+
+        /*
         context = this;
         //Agregando
 
-        lista = (ListView) findViewById(R.id.listViewScan);
         wlanDB = new controller_wlan(this);
 
 
@@ -91,7 +125,7 @@ public class scan_result extends Activity {
             }
 
         });
-
+*/
     }
 
 
@@ -99,7 +133,7 @@ public class scan_result extends Activity {
         cursor = wlanDB.readWlan();
         textViewRedesDescubiertas.setText(""+cursor.getCount());
         //startManagingCursor(cursor);
-        wlanCursorAdapter = new wlan_cursor_adapter(this, cursor);
+        wlanCursorAdapter = new wlan_cursor_adapter(this, cursor, true);
         lista.setAdapter(wlanCursorAdapter);
 
     }

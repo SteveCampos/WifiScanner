@@ -72,9 +72,20 @@ public class controller_wlan {
         String twoMiddleDigits = metods.obtain_twoMiddleDitigs(splitBssid);
         String fourLastDigits = metods.obtain_ssidLastFourDigits(ssid);
 
+        Cursor cursorVendor = getVendor(id_vendor);
+        Cursor cursorRealVendor = getRealVendor(id_vendor);
+
+        String fabricante = "FABRICANTE DESCONOCIDO";
+        if (cursorVendor.getCount()>0){
+            fabricante = cursorVendor.getString(cursorVendor.getColumnIndexOrThrow(Constants.TABLE_VENDOR_VENDOR_NAME));
+        }else if (cursorRealVendor.getCount()>0){
+            fabricante = cursorRealVendor.getString(cursorRealVendor.getColumnIndexOrThrow(Constants.TABLE_VENDOR_VENDOR_NAME));
+            id_vendor = cursorRealVendor.getString(cursorRealVendor.getColumnIndexOrThrow("real"));
+        }
+
         //OBTENGO LA BASE DE DATOS EN MODO ESCRIBIBLE
         Log.d("DB", "OBTENIENDO DB EN MODO ESCRIBIBLE...");
-        SQLiteDatabase db = scanDBHelper.getWritableDatabase();
+        //SQLiteDatabase db = scanDBHelper.getWritableDatabase();
 
         ContentValues values = new ContentValues();
         values.put(Constants.BSSID, bssid); // BSSID (MAC)
@@ -87,6 +98,7 @@ public class controller_wlan {
 
         values.put(Constants.ID_VENDOR, id_vendor); // ID_VENDOR (PRIMEROS 6 DÍGITOS DE LA MAC)
         values.put(Constants.WLAN_TYPE, wlan_type);
+        values.put(Constants.FABRICANTE, fabricante);
 
 
 
@@ -106,7 +118,7 @@ public class controller_wlan {
 
         Log.d("INSERTANDO","REGISTRO INSERTADO..");
 
-        db.close(); // Closing database connection
+        //db.close(); // Closing database connection
 
         Log.d("DB","base de datos cerrada despupes de insertar registro");
         return rowId;
@@ -116,7 +128,7 @@ public class controller_wlan {
     public Cursor readWlan(){
 
         Log.d("DB", " READWLAN...");
-        SQLiteDatabase db = scanDBHelper.getReadableDatabase();
+        //SQLiteDatabase db = scanDBHelper.getReadableDatabase();
 
         // Define a projection that specifies which columns from the database
         // you will actually use after this query.
@@ -131,6 +143,7 @@ public class controller_wlan {
                 Constants.ID_VENDOR,
                 Constants.WLAN_TYPE,
                 Constants.CURRENT,
+                Constants.FABRICANTE
         };
 
         //OBTENIENDO LA CONSULTA
@@ -159,7 +172,7 @@ public class controller_wlan {
 
     public int getIdForBssid(String bssid){
 
-        SQLiteDatabase db = scanDBHelper.getReadableDatabase();
+        //SQLiteDatabase db = scanDBHelper.getReadableDatabase();
 
         // Define a projection that specifies which columns from the database
         // you will actually use after this query.
@@ -199,14 +212,14 @@ public class controller_wlan {
         }catch (Exception e){
             Log.d("Exception : ", ""+e);
         }
-        db.close();
+        //db.close();
         return id;
     }
 
     public Wlan getWlanForID(long id){
 
 
-        SQLiteDatabase db = scanDBHelper.getReadableDatabase();
+        //SQLiteDatabase db = scanDBHelper.getReadableDatabase();
         wlan = new Wlan();
         // Define a projection that specifies which columns from the database
         // you will actually use after this query.
@@ -260,7 +273,7 @@ public class controller_wlan {
         }catch (Exception e){
             Log.d("Exception : ", ""+e);
         }
-        db.close();
+        //db.close();
         return wlan;
     }
 
@@ -347,13 +360,27 @@ public class controller_wlan {
 
         String splitBssid = metods.obtain_splitBssid(bssid);
 
+
+        Cursor cursorVendor = getVendor(id_vendor);
+        Cursor cursorRealVendor = getRealVendor(id_vendor);
+
+        String fabricante = "FABRICANTE DESCONOCIDO";
+        if (cursorVendor.getCount()>0){
+            fabricante = cursorVendor.getString(cursorVendor.getColumnIndexOrThrow(Constants.TABLE_VENDOR_VENDOR_NAME));
+        }else if (cursorRealVendor.getCount()>0){
+            fabricante = cursorRealVendor.getString(cursorRealVendor.getColumnIndexOrThrow(Constants.TABLE_VENDOR_VENDOR_NAME));
+            id_vendor = cursorRealVendor.getString(cursorRealVendor.getColumnIndexOrThrow("real"));
+        }
+
         //String name_vendor = vendor.getVendorForID(id_vendor);
         String twoMiddleDigits = metods.obtain_twoMiddleDitigs(splitBssid);
         String fourLastDigits = metods.obtain_ssidLastFourDigits(ssid);
 
+
+
         //OBTENGO LA BASE DE DATOS EN MODO ESCRIBIBLE
         Log.d("DB", "OBTENIENDO DB EN MODO ESCRIBIBLE...");
-        SQLiteDatabase db = scanDBHelper.getWritableDatabase();
+        //SQLiteDatabase db = scanDBHelper.getWritableDatabase();
 
         ContentValues values = new ContentValues();
         values.put(Constants.BSSID, bssid); // BSSID (MAC)
@@ -366,6 +393,7 @@ public class controller_wlan {
 
         values.put(Constants.ID_VENDOR, id_vendor); // ID_VENDOR (PRIMEROS 6 DÍGITOS DE LA MAC)
         values.put(Constants.WLAN_TYPE, wlan_type);
+        values.put(Constants.FABRICANTE, fabricante);
 
 
 
@@ -392,7 +420,7 @@ public class controller_wlan {
 
     public Cursor getVendor(String id_vendor){
         Cursor cursor = null;
-        SQLiteDatabase db = scanDBHelper.getReadableDatabase();
+        //SQLiteDatabase db = scanDBHelper.getReadableDatabase();
         String[] projection = {
                 Constants.TABLE_VENDOR_ID,
                 Constants.TABLE_VENDOR_ID_VENDOR,
@@ -417,7 +445,7 @@ public class controller_wlan {
     }
     public Cursor getRealVendor(String falseOUI){
 
-        SQLiteDatabase db = scanDBHelper.getReadableDatabase();
+        //SQLiteDatabase db = scanDBHelper.getReadableDatabase();
         Cursor cursor =db.rawQuery(" SELECT real, vendor_name \n" +
                 "FROM oui \n" +
                 "INNER JOIN vendor \n" +
@@ -433,11 +461,11 @@ public class controller_wlan {
 
     public void changeCurrent(String[] id){
 
-        SQLiteDatabase mDb = scanDBHelper.getWritableDatabase();
+        //SQLiteDatabase mDb = scanDBHelper.getWritableDatabase();
         ContentValues toZero = new ContentValues();
         toZero.put(Constants.CURRENT,0);
 
-        int registros = mDb.update(Constants.TABLE_NAME, toZero,null,null);
+        int registros = db.update(Constants.TABLE_NAME, toZero,null,null);
 
 
         Log.d("REGISTROS CHANGE TO ZERO ", ""+registros);
@@ -456,7 +484,7 @@ public class controller_wlan {
         }
 
         Log.d("SIGNOS INTERROGACIÓN", signosInterrogacion);
-        int cantidadRegistros = mDb.update(Constants.TABLE_NAME, initialValues,
+        int cantidadRegistros = db.update(Constants.TABLE_NAME, initialValues,
                 Constants.ID_WLAN+" = "+ signosInterrogacion + " ",id);
 
 

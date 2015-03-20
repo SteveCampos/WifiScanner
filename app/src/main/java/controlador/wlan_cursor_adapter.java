@@ -23,44 +23,43 @@ public class wlan_cursor_adapter extends CursorAdapter{
     private controller_wlan dbAdapter = null ;
     private LayoutInflater cursorInflater;
 
-    public wlan_cursor_adapter(Context context, Cursor c) throws SQLException {
-        super(context, c);
+
+
+    public wlan_cursor_adapter(Context context, Cursor c, boolean autoRequery) {
+        super(context, c, autoRequery);
+
         dbAdapter = new controller_wlan(context);
         dbAdapter.abrir();
 
         cursorInflater = (LayoutInflater) context.getSystemService(
                 Context.LAYOUT_INFLATER_SERVICE);
+
     }
 
     @Override
     public void bindView(View view, Context context, Cursor cursor)
     {
+
+        //OBTENGO LAS VISTAS
+        TextView textViewSSID = (TextView) view.findViewById(R.id.textView_ssid);
+        TextView textViewLevel = (TextView) view.findViewById(R.id.textView_level);
+        TextView textViewFabricante = (TextView) view.findViewById(R.id.textView_fabricante);
+        LinearLayout linearLayoutDetail = (LinearLayout) view.findViewById(R.id.linearLayoutDetail);
+
+
+        //OBTENGO LOS DATOS
         String ssid = cursor.getString(cursor.getColumnIndexOrThrow(Constants.SSID));
         //String ssid = "IMAGINE DRAGONS, AHORA BASTILLE";
         int level = cursor.getInt(cursor.getColumnIndexOrThrow(Constants.LEVEL));
         String id_vendor = cursor.getString(cursor.getColumnIndexOrThrow(Constants.ID_VENDOR));
         int current = cursor.getInt(cursor.getColumnIndexOrThrow(Constants.CURRENT));
-
+        String fabricante = cursor.getString(cursor.getColumnIndexOrThrow(Constants.FABRICANTE));
 
         if (ssid.length()==0){
             //ssid = "RED OCULTA";
         }
 
-        Cursor cursorVendor = dbAdapter.getVendor(id_vendor);
-        Cursor cursorRealVendor = dbAdapter.getRealVendor(id_vendor);
 
-        String fabricante = "FABRICANTE DESCONOCIDO";
-        if (cursorVendor.getCount()>0){
-            fabricante = cursorVendor.getString(cursorVendor.getColumnIndexOrThrow(Constants.TABLE_VENDOR_VENDOR_NAME));
-        }else if (cursorRealVendor.getCount()>0){
-            fabricante = cursorRealVendor.getString(cursorRealVendor.getColumnIndexOrThrow(Constants.TABLE_VENDOR_VENDOR_NAME));
-            id_vendor = cursorRealVendor.getString(cursorRealVendor.getColumnIndexOrThrow("real"));
-        }
-
-        TextView textViewSSID = (TextView) view.findViewById(R.id.textView_ssid);
-        TextView textViewLevel = (TextView) view.findViewById(R.id.textView_level);
-        TextView textViewFabricante = (TextView) view.findViewById(R.id.textView_fabricante);
-        LinearLayout linearLayoutDetail = (LinearLayout) view.findViewById(R.id.linearLayoutDetail);
         if (current==0){
             linearLayoutDetail.setAlpha((float) 0.3);
         }else if (current==1){

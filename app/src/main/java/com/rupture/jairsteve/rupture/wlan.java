@@ -60,6 +60,8 @@ public class wlan extends Activity {
 
         mainActivity = this;
         wlanDB = new controller_wlan(this);
+        wlanDB.abrir();
+
         long id = getIntent().getLongExtra("id", 1);
         wlan = wlanDB.getWlanForID(id);
 

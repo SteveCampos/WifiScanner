@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.database.Cursor;
+import android.graphics.PorterDuff;
 import android.graphics.Typeface;
 import android.net.wifi.ScanResult;
 import android.net.wifi.WifiManager;
@@ -18,9 +19,11 @@ import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import AsyncTask.AsyncTaskScan;
@@ -32,28 +35,26 @@ import controlador.controller_wlan;
 public class splash_screen extends Activity {
 
 
-    private splash_screen mainAtivity;
+    private Activity mainAtivity;
     private AsyncTaskScan asyncTaskScan;
 
     public static final String fontPathMonserratBold = "fonts/Montserrat-Bold.ttf";
 
     private TextView textView_Splash_Screen_App_Name;
     private TextView textView_Splash_Screen_Developer_Name;
+    private ProgressBar progressBar;
 
     public ScanDbHelper dbHelperScan;
+
+    private WifiManager wifiManager;
+    Wlan wlan;
+    controller_wlan wlanDB;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash_screen);
-        dbHelperScan = new ScanDbHelper(this);
         mainAtivity = this;
-
-
-
-        //Cursor cursor = dbHelperScan.readVendor();
-
-
 
         Typeface typefaceMonserratBold = Typeface.createFromAsset(getAssets(), fontPathMonserratBold);
         //CAMBIAR ESTILO DE FUENTE A MONTSERRAT( se ve más cool)
@@ -62,91 +63,22 @@ public class splash_screen extends Activity {
         textView_Splash_Screen_Developer_Name = (TextView) findViewById(R.id.textView_Splash_Screen_Developer_Name);
         textView_Splash_Screen_Developer_Name.setTypeface(typefaceMonserratBold);
 
-
-
-        new OverrideDB().execute();
-
         Log.d("UI"," CREA LA UI");
-        //wlanDB.deleteWlan();
-/*
-        wifiManager = (WifiManager) getSystemService(WIFI_SERVICE);
-
-        if(wifiManager.getWifiState() == wifiManager.WIFI_STATE_ENABLED){
-
-            //Register Wifi Scan Results Receiver
-            IntentFilter intentFilter = new IntentFilter();
-            intentFilter.addAction(WifiManager.SCAN_RESULTS_AVAILABLE_ACTION);
-
-            registerReceiver(new BroadcastReceiver() {
-                @Override
-                public void onReceive(Context context, Intent intent) {
-
-                    List<ScanResult> scanResultsList = wifiManager.getScanResults();
-                    final int sizeListScan = scanResultsList.size();
-                    Log.d("Wifi Scan count ...", "" + sizeListScan);
-
-                    for(int i=0; i<sizeListScan; i++){
-                        wlan = new Wlan();
-                        Log.d("SSID",scanResultsList.get(i).SSID.toString());
-                        wlan.setSsid(scanResultsList.get(i).SSID.toString());
-                        Log.d("BSSID", scanResultsList.get(i).BSSID.toString());
-                        wlan.setBssid(scanResultsList.get(i).BSSID.toString());
-                        Log.d("CAPABILITIES", scanResultsList.get(i).capabilities.toString());
-                        wlan.setCapabilities(scanResultsList.get(i).capabilities.toString());
-                        Log.d("FREQUENCY", "" + scanResultsList.get(i).frequency);
-                        wlan.setFrequency(scanResultsList.get(i).frequency);
-                        Log.d("LEVEL", "" + scanResultsList.get(i).level);
-                        wlan.setLevel(scanResultsList.get(i).level);
-                        Log.d("TIMESTAMP", ""+scanResultsList.get(i).timestamp);
-                        wlan.setTimestamp((int) scanResultsList.get(i).timestamp);
 
 
-                        //INSERTO CADA REGISTRO EN LA TABLA WLAN (:
-                        wlanDB.insertWlan(wlan);
-
-                    }
-                }
-            }, intentFilter);
-        }else{
-            Log.d("WIFI", "SU WIFI ESTÁ DESACTIVADOS");
-        }
-
-        //start Wifi Scan
-        wifiManager.startScan();
-
-        Cursor cursor = wlanDB.readWlan();
-
-
-
-
-
-        wlanDB = new controller_wlan(this);
-
-
-        wifiManager = (WifiManager) getSystemService(WIFI_SERVICE);
-
-        if(wifiManager.getWifiState() == wifiManager.WIFI_STATE_ENABLED){
-
-            intentFilter = new IntentFilter();
-            intentFilter.addAction(WifiManager.SCAN_RESULTS_AVAILABLE_ACTION);
-
-            Log.d("REGISTER RECEIVER","REGISTER RECEIVER");
-            scanResultBroadcastReceiver = new ScanResultBroadcastReceiver(this, wifiManager);
-            registedReceived = true;
-            registerReceiver(this.scanResultBroadcastReceiver, intentFilter);
-
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        if(!prefs.getBoolean("firstTime", false)) {
+            // run your one time code
+            Log.d("CODE","RUN FIRST TIME");
+            new OverrideDB().execute();
+            SharedPreferences.Editor editor = prefs.edit();
+            editor.putBoolean("firstTime", true);
+            editor.commit();
         }else{
 
-            //El wifi está desactivado
-            showDialog();
+            Log.d("CODE","IS NOT THE  FIRST TIME");
+            new Scanear().execute();
         }
-        //start Wifi Scan
-        wifiManager.startScan();
-
-        Log.d("INTENT", "INICIANDO LA CLASE SCAN RESULTS");
-        Intent intent = new Intent(this, scan_result.class);
-        startActivity(intent);
-*/
 
 
     }
@@ -172,14 +104,6 @@ public class splash_screen extends Activity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        dbHelperScan.close();
-        if (asyncTaskScan.isRegistedReceived()) {
-            unregisterReceiver(asyncTaskScan.getScanResultBroadcastReceiver());
-            Log.d("REGISTER RECEIVER","UNREGISTER RECEIVER");
-        }else{
-            Log.d("REGISTER RECEIVER", "NO UNREGISTER BECAUSE NOT REGISTER");
-        }
-
     }
 
     @Override
@@ -204,8 +128,6 @@ public class splash_screen extends Activity {
     @Override
     protected void onPause() {
         super.onPause();
-        dbHelperScan.close();
-
     }
 
 
@@ -213,11 +135,6 @@ public class splash_screen extends Activity {
     @Override
     protected void onResume() {
         super.onResume();
-        try {
-            dbHelperScan.sobreEscribirDB();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
     }
 
 class OverrideDB extends AsyncTask<String, String, String>{
@@ -225,9 +142,12 @@ class OverrideDB extends AsyncTask<String, String, String>{
     @Override
     protected String doInBackground(String... strings) {
         try {
+            Log.d("CODE DB","OVERRIDE EXECUTE");
+            dbHelperScan = new ScanDbHelper(mainAtivity);
             dbHelperScan.sobreEscribirDB();
         } catch (SQLException e) {
             e.printStackTrace();
+            Log.d("CODE DB",e.getMessage());
         }
         return null;
     }
@@ -241,47 +161,102 @@ class OverrideDB extends AsyncTask<String, String, String>{
     protected void onPostExecute(String s) {
         super.onPostExecute(s);
 
-        asyncTaskScan = new AsyncTaskScan(mainAtivity);
-        asyncTaskScan.execute();
+        new Scanear().execute();
+
+
 
     }
 }
 
 
-    /*
-    public void ShowWlan(Cursor cursor){
+    class Scanear extends AsyncTask<String,String,String>{
 
-        StringBuilder builder = new StringBuilder("Table vendor results : \n");
-        while (cursor.moveToNext()){
-
-            int id_wlan = cursor.getInt(0);
-            String bssid = cursor.getString(1);
-            String ssid = cursor.getString(2);
-            String capabilities = cursor.getString(3);
-            int frequency = cursor.getInt(4);
-            int level = cursor.getInt(5);
-            int timestamp = cursor.getInt(6);
-            String id_vendor = cursor.getString(7);
-            int wlan_type = cursor.getInt(8);
+        @Override
+        protected String doInBackground(String... strings) {
 
 
+            wlanDB = new controller_wlan(mainAtivity);
+            wlanDB.abrir();
 
+            wifiManager = (WifiManager) getSystemService(WIFI_SERVICE);
 
-            builder.append(id_wlan).append(": ");
-            builder.append(bssid).append("\n");
-            builder.append(ssid).append("\n");
-            builder.append(capabilities).append("\n");
-            builder.append(frequency).append("\n");
-            builder.append(level).append("\n");
-            builder.append(timestamp).append("\n");
-            builder.append(id_vendor).append("\n");
-            builder.append(wlan_type).append("\n");
-            builder.append("---------------------------------------").append("\n");
+            if(wifiManager.getWifiState() == wifiManager.WIFI_STATE_ENABLED){
 
+                //Register Wifi Scan Results Receiver
+                IntentFilter intentFilter = new IntentFilter();
+                intentFilter.addAction(WifiManager.SCAN_RESULTS_AVAILABLE_ACTION);
 
+                /*
+                registerReceiver(new BroadcastReceiver() {
+                    @Override
+                    public void onReceive(Context context, Intent intent) {*/
+
+                List<ScanResult> scanResultsList = wifiManager.getScanResults();
+                List<String> listaIds = new ArrayList<String>();
+                final int sizeListScan = scanResultsList.size();
+                for(int i=0; i<sizeListScan; i++){
+                    wlan = new Wlan();
+
+                    Log.d("SSID", scanResultsList.get(i).SSID);
+                    Log.d("BSSID", scanResultsList.get(i).BSSID);
+
+                    wlan.setBssid(scanResultsList.get(i).BSSID);
+                    wlan.setSsid(scanResultsList.get(i).SSID);
+                    wlan.setCapabilities(scanResultsList.get(i).capabilities);
+                    wlan.setFrequency(scanResultsList.get(i).frequency);
+                    wlan.setLevel(scanResultsList.get(i).level);
+                    wlan.setTimestamp((int) scanResultsList.get(i).timestamp);
+                    wlan.setCurrent(0);
+
+                    int id = wlanDB.getIdForBssid(scanResultsList.get(i).BSSID);
+                    long rowId;
+                    if (id==-1) {
+                        Log.d("DB", "ESTA ES UNA NUEVA BSSID");
+                        rowId = wlanDB.insertWlan(wlan);
+                        Log.d("DB", "REGISTRO INSERTADO CON ID :" + rowId);
+                        listaIds.add(""+rowId);
+
+                    }else {
+                        Log.d("DB","ESTA BSSID YA EXISTE SU ID ES : " + id);
+                        Log.d("DB","SE MODIGICARÁ " + id);
+                        listaIds.add(""+id);
+                        int count =  wlanDB.updateWlan(wlan, id);
+                        if (count==1){
+                            Log.d("DB","REGISTRO MODIFICADO SATISFACTORIAMENTE" );
+                        }
+                    }
+
+                }
+
+                String[] ids = new String[listaIds.size()];
+                listaIds.toArray(ids);
+
+                for (int i = 0; i < ids.length; i++) {
+                    Log.d("ID ACTUALIZADOS ", "" + ids[i]);
+                }
+                if (listaIds.size()>0){
+                    wlanDB.changeCurrent(ids);
+                }
+                //  }
+                //}, intentFilter);
+            }else{
+                Log.d("WIFI", "SU WIFI ESTÁ DESACTIVADOS");
+            }
+
+            //start Wifi Scan
+            wifiManager.startScan();
+
+            return null;
         }
-        TextView textView = (TextView) findViewById(R.id.textView_id);
-        textView.setText(builder);
 
-    }*/
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+
+            Intent startActivity = new Intent(mainAtivity, scan_result.class);
+            mainAtivity.finish();
+            //startActivity.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            mainAtivity.startActivity(startActivity);
+        }
+    }
 }
