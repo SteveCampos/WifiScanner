@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CursorAdapter;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -42,10 +43,10 @@ public class wlan_cursor_adapter extends CursorAdapter{
 
         //OBTENGO LAS VISTAS
         TextView textViewSSID = (TextView) view.findViewById(R.id.textView_ssid);
-        TextView textViewLevel = (TextView) view.findViewById(R.id.textView_level);
+        ImageView imageViewLevel = (ImageView) view.findViewById(R.id.imageViewSignal);
         TextView textViewFabricante = (TextView) view.findViewById(R.id.textView_fabricante);
         LinearLayout linearLayoutDetail = (LinearLayout) view.findViewById(R.id.linearLayoutDetail);
-
+        ImageView imageView = (ImageView) view.findViewById(R.id.imageView);
 
         //OBTENGO LOS DATOS
         String ssid = cursor.getString(cursor.getColumnIndexOrThrow(Constants.SSID));
@@ -54,6 +55,7 @@ public class wlan_cursor_adapter extends CursorAdapter{
         String id_vendor = cursor.getString(cursor.getColumnIndexOrThrow(Constants.ID_VENDOR));
         int current = cursor.getInt(cursor.getColumnIndexOrThrow(Constants.CURRENT));
         String fabricante = cursor.getString(cursor.getColumnIndexOrThrow(Constants.FABRICANTE));
+        int wlan_type = cursor.getInt(cursor.getColumnIndexOrThrow(Constants.WLAN_TYPE));
 
         if (ssid.length()==0){
             //ssid = "RED OCULTA";
@@ -72,19 +74,28 @@ public class wlan_cursor_adapter extends CursorAdapter{
         int convertLevel =convertLevel(level);
 
         textViewSSID.setText(ssid);
-        textViewLevel.setText(""+convertLevel);
         textViewFabricante.setText(fabricante);
 
 
-        if (isBetween(convertLevel,-100,20)){
-            textViewLevel.setTextColor(context.getResources().getColor(R.color.rojo));
-        }else if (isBetween(convertLevel, 21, 40)){
-            textViewLevel.setTextColor(context.getResources().getColor(R.color.amarillo));
-        }else if (isBetween(convertLevel, 41, 70)){
-            textViewLevel.setTextColor(context.getResources().getColor(R.color.verde));
-        }else if(isBetween(convertLevel, 71, 200)){
-            textViewLevel.setTextColor(context.getResources().getColor(R.color.azul));
+        if (isBetween(convertLevel,-100,10)){
+            //textViewLevel.setTextColor(context.getResources().getColor(R.color.rojo));
+            imageViewLevel.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_signal_cellular_0_bar_black_36dp));
+        }else if (isBetween(convertLevel, 11, 20)){
+            imageViewLevel.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_signal_cellular_1_bar_black_36dp));
+        }else if (isBetween(convertLevel, 21, 30)){
+            imageViewLevel.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_signal_cellular_2_bar_black_36dp));
+        }else if (isBetween(convertLevel, 31, 50)){
+            imageViewLevel.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_signal_cellular_3_bar_black_36dp));
+        }else if(isBetween(convertLevel, 51, 200)){
+            imageViewLevel.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_signal_cellular_4_bar_black_36dp));
         }
+
+        if (wlan_type==1&&(!fabricante.equals("FABRICANTE DESCONOCIDO"))){
+            imageView.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_beenhere_black_48dp));
+        }else{
+            imageView.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_wifi_lock_white_48dp));
+        }
+
 
     }
 
