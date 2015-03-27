@@ -91,7 +91,7 @@ public class wlan_cursor_adapter extends CursorAdapter{
         }
 
         if (wlan_type==1&&(!fabricante.equals("FABRICANTE DESCONOCIDO"))){
-            imageView.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_beenhere_black_48dp));
+            imageView.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_done_black_48dp));
         }else{
             imageView.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_wifi_lock_white_48dp));
         }
