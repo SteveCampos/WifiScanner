@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:layout_gravity="center"
+        android:gravity="center">
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="WIFI SCANNER"
+            android:id="@+id/textViewTermsUseTitle"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:textStyle="bold"
+            android:textAppearance="@style/TextAppearance.AppCompat.Title"
+            android:textColor="@color/PersonalizadoSteve4"
+            android:textSize="32sp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="top">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Wifi scanner scanea las redes wifi a su alrededor a través del móvil"
+            android:id="@+id/textViewTermsUseAppDescription"
+            android:drawableTop="@drawable/ic_launcher"
+            android:drawablePadding="16dp"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Caption"
+            android:textSize="16sp"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:textColor="@color/Dark5"
+            android:textStyle="italic"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginBottom="4dp" />
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="Términos y Condiciones de Uso"
+            android:id="@+id/textViewShowTermsUse"
+            android:gravity="center"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Caption"
+            android:textColor="@color/Dark1"
+            android:textStyle="bold"
+            android:layout_gravity="bottom" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="bottom|end|center_horizontal"
+        android:layout_marginBottom="16dp">
+
+        <com.rey.material.widget.CheckBox
+            style="@style/Material.Drawable.CheckBox"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/checkBoxTerms"
+            android:checked="false"
+            android:text="He leído, y acepto los términos uso"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp" />
+
+        <com.rey.material.widget.Button
+            style="@style/RaiseColorButtonRippleStyle"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="SCANEAR"
+            app:rd_enable="true"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Button"
+            app:rd_delayClick="true"
+            android:textColor="@color/Blanco"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:paddingTop="12dp"
+            android:paddingBottom="12dp"
+            android:layout_marginLeft="32dp"
+            android:layout_marginRight="32dp"
+            android:layout_marginTop="4dp"
+            android:textStyle="bold"
+            android:id="@+id/buttonInstall" />
+
+
+    </LinearLayout>
+
+</LinearLayout>

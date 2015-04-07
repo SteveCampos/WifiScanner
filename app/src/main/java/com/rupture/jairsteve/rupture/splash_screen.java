@@ -2,14 +2,10 @@ package com.rupture.jairsteve.rupture;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
-import android.database.Cursor;
-import android.graphics.PorterDuff;
 import android.graphics.Typeface;
 import android.net.wifi.ScanResult;
 import android.net.wifi.WifiManager;
@@ -19,6 +15,9 @@ import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -31,6 +30,8 @@ import modelo.ScanDbHelper;
 import modelo.Wlan;
 import controlador.controller_wlan;
 
+import  com.rey.material.widget.CheckBox;
+
 
 public class splash_screen extends Activity {
 
@@ -40,6 +41,7 @@ public class splash_screen extends Activity {
 
     public static final String fontPathMonserratBold = "fonts/Montserrat-Bold.ttf";
 
+    SharedPreferences prefs;
     private TextView textView_Splash_Screen_App_Name;
     private TextView textView_Splash_Screen_Developer_Name;
     private ProgressBar progressBar;
@@ -50,11 +52,58 @@ public class splash_screen extends Activity {
     Wlan wlan;
     controller_wlan wlanDB;
 
+
+    //VARIABLES TÉRMINOS DE USO
+    private CheckBox checkBoxTerms;
+    private com.rey.material.widget.Button buttonInstall;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_splash_screen);
         mainAtivity = this;
+         prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        if (!prefs.getBoolean("termsUseAceppted",false)){
+            setContentView(R.layout.terms_use);
+            checkBoxTerms = (CheckBox) findViewById(R.id.checkBoxTerms);
+            buttonInstall = (com.rey.material.widget.Button) findViewById(R.id.buttonInstall);
+
+
+            buttonInstall.setEnabled(false);
+            buttonInstall.setAlpha((float)0.8);
+            checkBoxTerms.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                        buttonInstall.setEnabled(isChecked);
+                    if (isChecked){
+                        buttonInstall.setAlpha(1);
+                    }else {
+                        buttonInstall.setAlpha((float)0.8);
+                    }
+                }
+            });
+            buttonInstall.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Log.d("TERMINOS DE USO","ACCEPTADOS");
+                    SharedPreferences.Editor editor = prefs.edit();
+                    editor.putBoolean("termsUseAceppted", true);
+                    editor.commit();
+                    showSplashScreen();
+                }
+            });
+
+        }else{
+            showSplashScreen();
+        }
+
+
+    }
+
+    public void showSplashScreen(){
+
+        setContentView(R.layout.activity_splash_screen);
+
 
         Typeface typefaceMonserratBold = Typeface.createFromAsset(getAssets(), fontPathMonserratBold);
         //CAMBIAR ESTILO DE FUENTE A MONTSERRAT( se ve más cool)
@@ -65,8 +114,6 @@ public class splash_screen extends Activity {
 
         Log.d("UI"," CREA LA UI");
 
-
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         if(!prefs.getBoolean("firstTime", false)) {
             // run your one time code
             Log.d("CODE","RUN FIRST TIME");
@@ -79,8 +126,6 @@ public class splash_screen extends Activity {
             Log.d("CODE","IS NOT THE  FIRST TIME");
             new Scanear().execute();
         }
-
-
     }
 
     public void showDialog(){
