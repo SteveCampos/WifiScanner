@@ -29,7 +29,7 @@
                     android:textStyle="bold"
                     android:textSize="32dp"
                     android:gravity="center"
-                    android:textColor="@color/PersonalizadoSteve2"
+                    android:textColor="@color/Dark5"
                     android:layout_marginTop="16dp" />
 
                 <TextView
@@ -37,7 +37,7 @@
                     android:layout_height="wrap_content"
                     android:text="Lima, Perú"
                     android:id="@+id/textView_scan_result_ubication"
-                    android:textColor="@color/Personalizado4" />
+                    android:textColor="@color/Dark1" />
 
                 <ProgressBar
                     android:layout_width="256dp"
@@ -63,7 +63,7 @@
                         android:id="@+id/textViewFabricante"
                         android:layout_weight="2"
                         android:gravity="center"
-                        android:textColor="@color/azul"
+                        android:textColor="@color/Dark5"
                         android:textStyle="italic" />
                 </LinearLayout>
             </LinearLayout>

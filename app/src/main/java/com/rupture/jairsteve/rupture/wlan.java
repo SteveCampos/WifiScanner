@@ -1,33 +1,22 @@
 package com.rupture.jairsteve.rupture;
 
 import android.app.Activity;
-import android.app.AlertDialog;
-import android.app.Dialog;
-import android.content.ClipboardManager;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
-import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.provider.Settings;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.util.Log;
-import android.view.ContextThemeWrapper;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
-import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import org.w3c.dom.Text;
+import com.afollestad.materialdialogs.MaterialDialog;
 
-import java.sql.SQLException;
 
 import controlador.controller_wlan;
 import controlador.controller_wlan_metods;
@@ -52,13 +41,19 @@ public class wlan extends Activity {
     String password;
     private Activity mainActivity;
 
+    //DIALOG MATERIAL
+    private Context context;
+    MaterialDialog.Builder builder = null;
+    MaterialDialog dialog  =null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Log.d("LIFECYCLE","ON CREATE");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_wlan);
 
         mainActivity = this;
+        context = this;
         wlanDB = new controller_wlan(this);
         wlanDB.abrir();
 
@@ -75,6 +70,7 @@ public class wlan extends Activity {
         textView_frequency = (TextView) findViewById(R.id.textViewFrecuencia);
         textViewLevel = (TextView) findViewById(R.id.textViewLevel);
         textView_timestamp = (TextView) findViewById(R.id.textViewTimestamp);
+
 
 
 
@@ -113,15 +109,84 @@ public class wlan extends Activity {
                 Log.d("FUCK YEAH", "TENEMOS LA CONTRASEÑA");
 
                 controller_wlan_metods c = new controller_wlan_metods();
-                password = c.getPassword(wlan.getSsid(),id_vendor, wlan.getBssid(), fabricante);
+                password = c.getPassword(wlan.getSsid(),id_vendor, wlan.getBssid(), fabricante).toUpperCase();
                 Log.d("FUCKING JODIDAMENTE YEAH", password);
-                dialogFuckYeah().show();
+                //dialogFuckYeah().show();
+
+               showCustomDialog();
+
             }
         }
 
 
     }
 
+    public MaterialDialog showCustomDialog(){
+        builder = new MaterialDialog.Builder(this);
+        /*final View layout = View.inflate(this, R.layout.layout_dialog_custom, null);
+        TextView textView = (TextView)layout.findViewById(R.id.textViewPassword);
+        textView.setText(""+password);*/
+
+
+                builder
+                .title("" + wlan.getSsid())
+                .content("" + password)
+//                .customView(layout,true)
+                .positiveText("COPY")
+                .negativeText("DISCARD")
+                .callback(new MaterialDialog.ButtonCallback() {
+                    @Override
+                    public void onPositive(MaterialDialog dialog) {
+                        if(android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.HONEYCOMB) {
+                            android.text.ClipboardManager clipboard = (android.text.ClipboardManager) getSystemService(mainActivity.CLIPBOARD_SERVICE);
+                            clipboard.setText(password.toUpperCase());
+                        } else {
+                            android.content.ClipboardManager clipboard = (android.content.ClipboardManager) getSystemService(mainActivity.CLIPBOARD_SERVICE);
+                            android.content.ClipData clip = android.content.ClipData.newPlainText("Copied Text", password.toUpperCase());
+                            clipboard.setPrimaryClip(clip);
+                        }
+                        Toast.makeText(mainActivity.getApplicationContext(), "Copiado al portapapeles", Toast.LENGTH_LONG).show();
+                        mainActivity.startActivity(new Intent(Settings.ACTION_WIFI_SETTINGS));
+                        super.onPositive(dialog);
+                    }
+
+                    @Override
+                    public void onNegative(MaterialDialog dialog) {
+                        super.onNegative(dialog);
+                    }
+
+                });
+
+        dialog = builder.show();
+        return dialog;
+    }
+
+    @Override
+    protected void onPause() {
+        Log.d("LIFECYCLE", "ON PAUSE");
+        super.onPause();
+        if (dialog!=null){
+            dialog.dismiss();
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        Log.d("LIFECYCLE","ON RESUMEN");
+        super.onResume();
+    }
+
+    @Override
+    protected void onStop() {
+        Log.d("LIFECYCLE","ON STOP");
+        super.onStop();
+    }
+
+    @Override
+    protected void onDestroy() {
+        Log.d("LIFECYCLE","ON DESTROY");
+        super.onDestroy();
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -141,6 +206,7 @@ public class wlan extends Activity {
         }
         return super.onOptionsItemSelected(item);
     }
+    /*
     private Dialog dialogFuckYeah() {
         final View layout = View.inflate(this, R.layout.fuck_yeah, null);
         final TextView textViewPassword = ((TextView) layout.findViewById(R.id.textViewPassword));
@@ -174,4 +240,5 @@ public class wlan extends Activity {
         //alertDialog.getWindow().setLayout(WindowManager.LayoutParams.FILL_PARENT, LinearLayout.LayoutParams.FILL_PARENT);
         return alertDialog;
     }
+    */
 }

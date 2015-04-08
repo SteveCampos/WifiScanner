@@ -79,6 +79,7 @@
             android:id="@+id/checkBoxTerms"
             android:checked="false"
             android:text="He leído, y acepto los términos uso"
+            app:cbd_strokeColor="@color/Dark1"
             android:layout_gravity="center"
             android:gravity="center"
             android:textAppearance="@style/TextAppearance.AppCompat.Body1"

@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <!--<com.rey.material.widget.EditText
+
+        style="@style/Material.Widget.EditText.Light"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/abc_primary_text_material_light"
+        android:hint="Signal strength"
+        android:text="Excellent"
+        app:et_dividerHeight="0dp"
+        android:textColorHint="@color/abc_secondary_text_material_light"
+        app:et_supportMode="none"
+        android:paddingTop="8dp"
+
+    />
+    <com.rey.material.widget.EditText
+        style="@style/Material.Widget.EditText.Light"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/abc_primary_text_material_light"
+        android:hint="Signal strength"
+        android:text="Excellent"
+        app:et_dividerHeight="0dp"
+        app:et_supportMode="none"
+        android:paddingTop="8dp"
+        />
+   <com.rey.material.widget.EditText
+        style="@style/Material.Widget.EditText.Light"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/abc_primary_text_material_light"
+        android:hint="Capabilities"
+        android:text="WPA-PSK2"
+        app:et_dividerHeight="0dp"
+        app:et_supportMode="none"
+        android:paddingTop="8dp"
+        />
+    <com.rey.material.widget.EditText
+        style="@style/Material.Widget.EditText.Light"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/abc_primary_text_material_light"
+        android:text="WPA-PSK2"
+        app:et_dividerHeight="0dp"
+        app:et_supportMode="charCounter"
+        android:paddingTop="8dp"
+        android:textColorHint="@color/abc_secondary_text_material_light"
+        android:hint="Password"
+        android:inputType="textPassword"
+        />-->
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="T6470028C6DA4"
+        android:id="@+id/textViewPassword"
+        android:textSize="20sp"
+        android:textColor="@color/Dark1"
+        android:layout_marginLeft="8dp" />
+
+    <com.rey.material.widget.CheckBox
+        style="@style/Material.Drawable.CheckBox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Show password"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        android:textColor="@color/abc_primary_text_material_light"
+        android:gravity="center_vertical"
+        android:paddingLeft="24dp"
+        android:checked="true"
+        android:id="@+id/showPassword"
+        app:cbd_strokeColor="@color/Dark1"
+        />
+
+</LinearLayout>

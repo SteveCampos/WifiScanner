@@ -1,7 +1,6 @@
 package com.rupture.jairsteve.rupture;
 
 import android.app.Activity;
-import android.app.ListActivity;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
@@ -12,13 +11,10 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.sql.SQLException;
 
-import AsyncTask.AsyncTaskScan;
 import controlador.controller_wlan;
 import controlador.wlan_cursor_adapter;
 import modelo.Constants;
@@ -81,9 +77,9 @@ public class scan_result extends Activity {
                 Cursor cursor = (Cursor) parent.getItemAtPosition(position);
 
                 String ssid = cursor.getString(cursor.getColumnIndexOrThrow(Constants.SSID));
-                Toast.makeText(getApplicationContext(),
-                        "" +ssid, Toast.LENGTH_LONG)
-                        .show();
+//                Toast.makeText(getApplicationContext(),
+//                        "" +ssid, Toast.LENGTH_LONG)
+//                        .show();
                 Intent intent = new Intent(context, wlan.class);
                 intent.putExtra("id",id);
                 startActivity(intent);
@@ -92,40 +88,6 @@ public class scan_result extends Activity {
         });
 
 
-        /*
-        context = this;
-        //Agregando
-
-        wlanDB = new controller_wlan(this);
-
-
-            wlanDB.abrir();
-
-        try {
-            vincular();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-
-        lista.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view,
-                                    int position, long id) {
-
-                Cursor cursor = (Cursor) parent.getItemAtPosition(position);
-
-                String ssid = cursor.getString(cursor.getColumnIndexOrThrow(Constants.SSID));
-                Toast.makeText(getApplicationContext(),
-                        "" +ssid, Toast.LENGTH_LONG)
-                        .show();
-                Intent intent = new Intent(context, wlan.class);
-                intent.putExtra("id",id);
-                startActivity(intent);
-            }
-
-        });
-*/
     }
 
 
@@ -156,52 +118,4 @@ public class scan_result extends Activity {
         }
         return super.onOptionsItemSelected(item);
     }
-/*
-    public void showResults(Cursor cursor){
-
-        Log.d("DB", "show all records ");
-
-        StringBuilder builder = new StringBuilder("SCAN RESULTS : \n");
-
-        int id_wlan = -1;
-        String bssid = null;
-        String ssid = null;
-        String capabilities = null;
-        int frequency = 0;
-        int level = 0;
-        int timestamp = 0;
-        String id_vendor;
-        int wlan_type = 0;
-
-
-        while (cursor.moveToNext()){
-
-            id_wlan = cursor.getInt(0);
-            bssid = cursor.getString(1);
-            ssid = cursor.getString(2);
-            capabilities = cursor.getString(3);
-            frequency = cursor.getInt(4);
-            level = cursor.getInt(5);
-            timestamp = cursor.getInt(6);
-            id_vendor = cursor.getString(7);
-            wlan_type = cursor.getInt(8);
-
-            builder.append("id_wlan : "+id_wlan+"\n");
-            builder.append("bssid : "+bssid+"\n");
-            builder.append("ssid : "+ssid+"\n");
-            builder.append("capabilities : " + capabilities+"\n");
-            builder.append("frequency : " + frequency+"\n");
-            builder.append("level : " + level+"\n");
-            builder.append("timestamp : " + timestamp+"\n");
-            builder.append("id_vendor : " + id_vendor+"\n");
-            builder.append("wlan_type : " + wlan_type+"\n");
-            builder.append("-------------------------------------\n");
-
-        }
-
-        cursor.close();
-        TextView textView = (TextView) findViewById(R.id.textView_show);
-        textView.setText(builder);
-
-    }*/
 }

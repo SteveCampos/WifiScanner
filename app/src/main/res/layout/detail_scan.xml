@@ -15,7 +15,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/imageView"
-            android:src="@drawable/ic_wifi_lock_black_48dp"
+            android:src="@drawable/ic_done_black_48dp"
             android:alpha="1" />
 
         <LinearLayout
@@ -34,7 +34,8 @@
                 android:gravity="bottom"
                 android:textStyle="bold"
                 android:textColor="@color/PersonalizadoSteve4"
-                android:textSize="14sp" />
+                android:textSize="14sp"
+                android:textAppearance="@style/Base.TextAppearance.AppCompat.Caption" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -45,7 +46,8 @@
                 android:gravity="top"
                 android:textSize="12sp"
                 android:textStyle="italic"
-                android:textColor="@color/Personalizado4" />
+                android:textColor="@color/Personalizado4"
+                android:textAppearance="@style/Base.TextAppearance.AppCompat.Body1" />
         </LinearLayout>
 
         <LinearLayout

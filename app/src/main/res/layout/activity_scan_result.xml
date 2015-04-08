@@ -30,7 +30,7 @@
                 android:textStyle="bold|italic"
                 android:textColor="@color/Dark1"
                 android:drawableRight="@drawable/ic_action_refresh"
-                />
+                android:textAppearance="@style/Base.TextAppearance.AppCompat.Title" />
 
         </LinearLayout>
 
@@ -49,7 +49,7 @@
                 android:textIsSelectable="false"
                 android:gravity="center"
                 android:textSize="64sp"
-                android:textColor="@color/PersonalizadoSteve2" />
+                android:textColor="@color/Dark5" />
         </LinearLayout>
     </LinearLayout>
 
