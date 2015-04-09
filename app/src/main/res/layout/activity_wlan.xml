@@ -27,7 +27,7 @@
                     android:text="WLAN_6789"
                     android:id="@+id/textView_scan_result_ssid"
                     android:textStyle="bold"
-                    android:textSize="32dp"
+                    android:textSize="32sp"
                     android:gravity="center"
                     android:textColor="@color/Dark5"
                     android:layout_marginTop="16dp" />

@@ -29,7 +29,6 @@
                 android:textSize="16sp"
                 android:textStyle="bold|italic"
                 android:textColor="@color/Dark1"
-                android:drawableRight="@drawable/ic_action_refresh"
                 android:textAppearance="@style/Base.TextAppearance.AppCompat.Title" />
 
         </LinearLayout>
@@ -53,16 +52,17 @@
         </LinearLayout>
     </LinearLayout>
 
-    <LinearLayout
+    <android.support.v4.widget.SwipeRefreshLayout
         android:orientation="vertical"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:layout_weight="1">
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:id="@+id/swipeRefresh">
 
         <ListView
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:id="@+id/listViewScan"
             android:listSelector="@drawable/list_selector" />
-    </LinearLayout>
+    </android.support.v4.widget.SwipeRefreshLayout>
 </LinearLayout>

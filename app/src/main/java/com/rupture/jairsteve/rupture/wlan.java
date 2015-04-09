@@ -110,7 +110,7 @@ public class wlan extends Activity {
 
                 controller_wlan_metods c = new controller_wlan_metods();
                 password = c.getPassword(wlan.getSsid(),id_vendor, wlan.getBssid(), fabricante).toUpperCase();
-                Log.d("FUCKING JODIDAMENTE YEAH", password);
+                Log.d("FUCKING", password);
                 //dialogFuckYeah().show();
 
                showCustomDialog();

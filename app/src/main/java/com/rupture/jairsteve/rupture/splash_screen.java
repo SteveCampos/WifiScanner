@@ -30,6 +30,7 @@ import modelo.ScanDbHelper;
 import modelo.Wlan;
 import controlador.controller_wlan;
 
+import com.afollestad.materialdialogs.MaterialDialog;
 import  com.rey.material.widget.CheckBox;
 
 
@@ -56,6 +57,11 @@ public class splash_screen extends Activity {
     //VARIABLES TÉRMINOS DE USO
     private CheckBox checkBoxTerms;
     private com.rey.material.widget.Button buttonInstall;
+    private TextView textViewTermsUse;
+
+
+    MaterialDialog.Builder builder = null;
+    MaterialDialog dialog  =null;
 
 
     @Override
@@ -67,8 +73,15 @@ public class splash_screen extends Activity {
             setContentView(R.layout.terms_use);
             checkBoxTerms = (CheckBox) findViewById(R.id.checkBoxTerms);
             buttonInstall = (com.rey.material.widget.Button) findViewById(R.id.buttonInstall);
+            textViewTermsUse = (TextView) findViewById(R.id.textViewShowTermsUse);
 
 
+            textViewTermsUse.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    showTermsUse();
+                }
+            });
             buttonInstall.setEnabled(false);
             buttonInstall.setAlpha((float)0.8);
             checkBoxTerms.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -85,7 +98,7 @@ public class splash_screen extends Activity {
             buttonInstall.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Log.d("TERMINOS DE USO","ACCEPTADOS");
+                    Log.d("TERMINOS DE USO","ACEPTADOS");
                     SharedPreferences.Editor editor = prefs.edit();
                     editor.putBoolean("termsUseAceppted", true);
                     editor.commit();
@@ -99,6 +112,7 @@ public class splash_screen extends Activity {
 
 
     }
+
 
     public void showSplashScreen(){
 
@@ -173,6 +187,9 @@ public class splash_screen extends Activity {
     @Override
     protected void onPause() {
         super.onPause();
+        if (dialog!=null){
+            dialog.dismiss();
+        }
     }
 
 
@@ -304,4 +321,35 @@ class OverrideDB extends AsyncTask<String, String, String>{
             mainAtivity.startActivity(startActivity);
         }
     }
+
+    public MaterialDialog showTermsUse(){
+        builder = new MaterialDialog.Builder(this);
+
+        builder
+                .title("Términos de Uso")
+                .content(R.string.terms_use)
+                .positiveText("ACEPTO")
+                .negativeText("NO, ACEPTO")
+                .callback(new MaterialDialog.ButtonCallback() {
+                    @Override
+                    public void onPositive(MaterialDialog dialog) {
+                        Log.d("TERMINOS DE USO","ACEPTADOS");
+                        SharedPreferences.Editor editor = prefs.edit();
+                        editor.putBoolean("termsUseAceppted", true);
+                        editor.commit();
+                        showSplashScreen();
+                    }
+
+                    @Override
+                    public void onNegative(MaterialDialog dialog) {
+                        mainAtivity.finish();
+                        super.onNegative(dialog);
+
+                    }
+                });
+        builder.autoDismiss(true);
+        dialog = builder.show();
+        return dialog;
+    }
+
 }

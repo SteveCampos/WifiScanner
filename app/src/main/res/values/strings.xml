@@ -12,4 +12,16 @@
     <string name="splash_screen_developer_name">BY  STEVE  CAMPOS</string>
     <string name="title_activity_scan_result_segunda_opcion">scan_result_segunda_opcion</string>
     <string name="title_activity_mostrar_redes">mostrarRedes</string>
+    <string name="terms_use">
+
+El uso de la app Wifi Scanner debe ser una herramienta básica para particulares que ansían conocer las características de sus access point y el nivel de seguridad de sus instalaciones inalámbricas, queda totalmente prohibido el uso de la misma para cometer actos delictivos de intrusión sobre las redes wireless de las cuales no somos propietarios o no tenemos los permisos pertinentes para analizar su nivel de seguridad. Es vuestra responsabilidad mantener la idea principal por la que se creo Wifi Scanner y todo su entorno.
+No se da soporte a intrusión a redes ajenas o sobre las que no se tenga autorización para establecer su monitorear su seguridad. El creador de esta app no se hace responsable del mal uso de esta.
+
+En conformidad con la <b>Ley 30171 de Delitos Informáticos del Estado Peruano</b>, los usuarios aceptan cumplir todos los normativas descritas, haciendo especial atención en el artículo número dos que dicta así:
+
+"Artículo 2. Acceso Ilícito
+El que deliberada e ilegítimamente accede a todo o en parte de un sistema informático, siempre que se realice con vulneración de medidas de seguridad establecidas para impedirlo, será reprimido con pena privativa de libertad no menor de uno ni mayor de cuatro años y con treinta a noventa días-multa.
+Será reprimido con la misma pena, el que accede a un sistema informático excediendo lo autorizado."
+
+    </string>
 </resources>
