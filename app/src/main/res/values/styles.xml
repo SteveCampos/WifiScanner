@@ -7,6 +7,7 @@
         <!-- colorPrimary is used for the default action bar background -->
         <item name="colorPrimary">@color/Dark1</item>
 
+
         <!-- colorPrimaryDark is used for the status bar -->
         <item name="colorPrimaryDark">@color/Dark3</item>
 
@@ -31,4 +32,8 @@
         <item name="di_outAnimation">@anim/anim_scale_out</item>
     </style>
 
+    <style name="DeterminateLinearProgressDrawableStyle" parent="Material.Drawable.LinearProgress.Determinate">
+    <item name="lpd_strokeColor">#FF4389F3</item>
+    <item name="lpd_strokeSecondaryColor">#FFB6CDF2</item>
+    </style>
 </resources>

@@ -2,6 +2,7 @@ package controlador;
 
 import android.content.Context;
 import android.database.Cursor;
+import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -61,15 +62,18 @@ public class wlan_cursor_adapter extends CursorAdapter{
             //ssid = "RED OCULTA";
         }
 
+        if(android.os.Build.VERSION.SDK_INT < Build.VERSION_CODES.HONEYCOMB) {
 
-        if (current==0){
-            linearLayoutDetail.setAlpha((float) 0.3);
-        }else if (current==1){
-            linearLayoutDetail.setAlpha(1);
         }else{
-            linearLayoutDetail.setAlpha((float) 0.3);
-        }
+            if (current==0){
+                linearLayoutDetail.setAlpha((float) 0.3);
+            }else if (current==1){
+                linearLayoutDetail.setAlpha(1);
+            }else{
+                linearLayoutDetail.setAlpha((float) 0.3);
+            }
 
+        }
 
         int convertLevel =convertLevel(level);
 
