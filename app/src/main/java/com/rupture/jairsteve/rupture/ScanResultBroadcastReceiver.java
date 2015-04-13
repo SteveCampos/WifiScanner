@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.net.wifi.ScanResult;
 import android.net.wifi.WifiManager;
+import android.os.Build;
 import android.util.Log;
 
 import java.util.ArrayList;
@@ -45,8 +46,11 @@ public class ScanResultBroadcastReceiver extends BroadcastReceiver {
             wlan.setSsid(scanResultsList.get(i).SSID);
             wlan.setCapabilities(scanResultsList.get(i).capabilities);
             wlan.setFrequency(scanResultsList.get(i).frequency);
-            wlan.setLevel(scanResultsList.get(i).level);
-            wlan.setTimestamp((int) scanResultsList.get(i).timestamp);
+            wlan.setLevel(scanResultsList.get(i).level);if(android.os.Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN_MR1) {
+                wlan.setTimestamp(0);
+            }else{
+                wlan.setTimestamp((int) scanResultsList.get(i).timestamp);
+            }
             wlan.setCurrent(0);
 
             int id = wlanDB.getIdForBssid(scanResultsList.get(i).BSSID);

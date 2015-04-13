@@ -8,6 +8,7 @@ import android.database.Cursor;
 import android.net.wifi.ScanResult;
 import android.net.wifi.WifiManager;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -142,6 +143,18 @@ public class scan_result extends Activity {
     }
 
     @Override
+    protected void onPause() {
+        wlanDB.cerrar();
+        super.onPause();
+    }
+
+    @Override
+    protected void onResume() {
+        wlanDB.abrir();
+        super.onResume();
+    }
+
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.scan_result, menu);
@@ -192,7 +205,11 @@ public class scan_result extends Activity {
                     wlan.setCapabilities(scanResultsList.get(i).capabilities);
                     wlan.setFrequency(scanResultsList.get(i).frequency);
                     wlan.setLevel(scanResultsList.get(i).level);
-                    wlan.setTimestamp((int) scanResultsList.get(i).timestamp);
+                    if(android.os.Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN_MR1) {
+                        wlan.setTimestamp(0);
+                    }else{
+                        wlan.setTimestamp((int) scanResultsList.get(i).timestamp);
+                    }
                     wlan.setCurrent(0);
 
                     int id = wlanDB.getIdForBssid(scanResultsList.get(i).BSSID);

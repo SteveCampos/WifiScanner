@@ -468,7 +468,7 @@ public class controller_wlan {
         int registros = db.update(Constants.TABLE_NAME, toZero,null,null);
 
 
-        Log.d("REGISTROS CHANGE TO ZERO ", ""+registros);
+        Log.d("CHANGE TO ZERO ", ""+registros);
         ContentValues initialValues = new ContentValues();
         initialValues.put(Constants.CURRENT,1);
 
@@ -488,7 +488,7 @@ public class controller_wlan {
                 Constants.ID_WLAN+" = "+ signosInterrogacion + " ",id);
 
 
-        Log.d("REGISTROS EN EL SCANEO ACTUAL  ", ""+cantidadRegistros);
+        Log.d("SCANEO ACTUAL  ", ""+cantidadRegistros);
     }
 
 }

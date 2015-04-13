@@ -7,10 +7,12 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.provider.Settings;
+import android.text.InputType;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.CompoundButton;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -23,6 +25,8 @@ import controlador.controller_wlan_metods;
 import modelo.Constants;
 import modelo.Wlan;
 
+import com.rey.material.widget.EditText;
+import com.rey.material.widget.CheckBox;
 
 public class wlan extends Activity {
 
@@ -113,7 +117,20 @@ public class wlan extends Activity {
                 Log.d("FUCKING", password);
                 //dialogFuckYeah().show();
 
-               showCustomDialog();
+                showCustomDialog();
+
+               /*final View layout = View.inflate(this, R.layout.layout_dialog_custom, null);
+                //REY DIALOG
+                Dialog mDialog = new Dialog(context);
+
+                mDialog.setContentView(layout);
+
+                mDialog
+                        .title(""+wlan.getSsid())
+                        .positiveAction("OK")
+                        .negativeAction("CANCEL")
+                        .show();*/
+
 
             }
         }
@@ -122,16 +139,33 @@ public class wlan extends Activity {
     }
 
     public MaterialDialog showCustomDialog(){
-        builder = new MaterialDialog.Builder(this);
-        /*final View layout = View.inflate(this, R.layout.layout_dialog_custom, null);
-        TextView textView = (TextView)layout.findViewById(R.id.textViewPassword);
-        textView.setText(""+password);*/
+        final View layout = View.inflate(this, R.layout.layout_dialog_custom, null);
+        final EditText editTextPassword = (EditText)layout.findViewById(R.id.editTextPassword);
+        final EditText editTextCapabilities = (EditText)layout.findViewById(R.id.editTextCapabilities);
+        final CheckBox checkBoxShow = (CheckBox) layout.findViewById(R.id.checkboxShowPassword);
 
+        editTextCapabilities.setText(""+wlan.getCapabilities());
+        editTextPassword.setText(""+password);
+        checkBoxShow.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
+                if(isChecked) {
+                    editTextPassword.setInputType(InputType.TYPE_TEXT_VARIATION_PASSWORD);
+                } else {
+                    editTextPassword.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+                }
+            }
+        });
+
+
+
+
+
+        builder = new MaterialDialog.Builder(this);
 
                 builder
                 .title("" + wlan.getSsid())
-                .content("" + password)
-//                .customView(layout,true)
+                .customView(layout,true)
                 .positiveText("COPY")
                 .negativeText("DISCARD")
                 .callback(new MaterialDialog.ButtonCallback() {
@@ -156,7 +190,6 @@ public class wlan extends Activity {
                     }
 
                 });
-
         dialog = builder.show();
         return dialog;
     }
@@ -164,6 +197,7 @@ public class wlan extends Activity {
     @Override
     protected void onPause() {
         Log.d("LIFECYCLE", "ON PAUSE");
+        wlanDB.cerrar();
         super.onPause();
         if (dialog!=null){
             dialog.dismiss();
@@ -173,6 +207,7 @@ public class wlan extends Activity {
     @Override
     protected void onResume() {
         Log.d("LIFECYCLE","ON RESUMEN");
+        wlanDB.abrir();
         super.onResume();
     }
 

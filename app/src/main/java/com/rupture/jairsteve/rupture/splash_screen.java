@@ -10,6 +10,7 @@ import android.graphics.Typeface;
 import android.net.wifi.ScanResult;
 import android.net.wifi.WifiManager;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
@@ -83,15 +84,28 @@ public class splash_screen extends Activity {
                 }
             });
             buttonInstall.setEnabled(false);
-            buttonInstall.setAlpha((float)0.8);
+            if(android.os.Build.VERSION.SDK_INT < Build.VERSION_CODES.HONEYCOMB) {
+
+            }else{
+                buttonInstall.setAlpha((float)0.8);
+            }
+
             checkBoxTerms.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                         buttonInstall.setEnabled(isChecked);
                     if (isChecked){
-                        buttonInstall.setAlpha(1);
+                        if(android.os.Build.VERSION.SDK_INT < Build.VERSION_CODES.HONEYCOMB) {
+
+                        }else{
+                            buttonInstall.setAlpha(1);
+                        }
                     }else {
+                        if(android.os.Build.VERSION.SDK_INT < Build.VERSION_CODES.HONEYCOMB) {
+
+                    }else{
                         buttonInstall.setAlpha((float)0.8);
+                    }
                     }
                 }
             });
@@ -267,7 +281,11 @@ class OverrideDB extends AsyncTask<String, String, String>{
                     wlan.setCapabilities(scanResultsList.get(i).capabilities);
                     wlan.setFrequency(scanResultsList.get(i).frequency);
                     wlan.setLevel(scanResultsList.get(i).level);
-                    wlan.setTimestamp((int) scanResultsList.get(i).timestamp);
+                    if(android.os.Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN_MR1) {
+                        wlan.setTimestamp(0);
+                    }else{
+                        wlan.setTimestamp((int) scanResultsList.get(i).timestamp);
+                    }
                     wlan.setCurrent(0);
 
                     int id = wlanDB.getIdForBssid(scanResultsList.get(i).BSSID);
@@ -314,7 +332,7 @@ class OverrideDB extends AsyncTask<String, String, String>{
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
-
+            wlanDB.cerrar();
             Intent startActivity = new Intent(mainAtivity, scan_result.class);
             mainAtivity.finish();
             //startActivity.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
