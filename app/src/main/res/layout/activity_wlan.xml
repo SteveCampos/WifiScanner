@@ -48,8 +48,6 @@
                     android:progress="50"
                     android:layout_marginTop="8dp"
                     android:progressTint="@color/azul"
-                    android:secondaryProgressTint="@color/verde"
-                    android:secondaryProgress="90"
                     android:progressBackgroundTint="@color/Dark1" />
 
 
@@ -96,11 +94,11 @@
                     android:orientation="horizontal"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="center"
                     android:paddingTop="8dp"
                     android:paddingBottom="8dp"
                     android:background="@drawable/layout_border_bottom"
-                    android:layout_marginLeft="10dp">
+                    android:layout_marginLeft="10dp"
+                    android:gravity="left|center_vertical">
 
                     <TextView
                         android:layout_width="fill_parent"
@@ -132,12 +130,12 @@
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:id="@+id/linearLayout7"
-                    android:gravity="center_vertical"
                     android:layout_marginLeft="10dp"
                     android:background="@drawable/layout_border_bottom"
                     android:paddingTop="8dp"
                     android:paddingBottom="8dp"
-                    android:baselineAligned="false">
+                    android:baselineAligned="false"
+                    android:gravity="left|center_vertical">
 
                     <TextView
                         android:layout_width="fill_parent"
@@ -167,12 +165,12 @@
                     android:orientation="horizontal"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="center"
                     android:id="@+id/linearLayout2"
                     android:background="@drawable/layout_border_bottom"
                     android:layout_marginLeft="10dp"
                     android:paddingTop="8dp"
-                    android:paddingBottom="8dp">
+                    android:paddingBottom="8dp"
+                    android:gravity="left|center_vertical">
 
                     <TextView
                         android:layout_width="fill_parent"
@@ -202,12 +200,12 @@
                     android:orientation="horizontal"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="center"
                     android:id="@+id/linearLayout3"
                     android:background="@drawable/layout_border_bottom"
                     android:layout_marginLeft="10dp"
                     android:paddingTop="8dp"
-                    android:paddingBottom="8dp">
+                    android:paddingBottom="8dp"
+                    android:gravity="left|center_vertical">
 
                     <TextView
                         android:layout_width="fill_parent"
@@ -237,11 +235,11 @@
                     android:orientation="horizontal"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="center"
                     android:id="@+id/linearLayout4"
                     android:paddingTop="8dp"
                     android:paddingBottom="8dp"
-                    android:layout_marginLeft="10dp">
+                    android:layout_marginLeft="10dp"
+                    android:gravity="left|center_vertical">
 
                     <TextView
                         android:layout_width="fill_parent"
