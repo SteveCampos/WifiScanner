@@ -101,7 +101,7 @@ public class controller_wlan_metods {
 
     public int obtain_tipoWlan(String ssid){
 
-        if (ssid.length()<=0){
+        if (ssid.length()<=4){
             return 0;
         }else {
 

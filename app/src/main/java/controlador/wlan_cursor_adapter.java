@@ -63,7 +63,17 @@ public class wlan_cursor_adapter extends CursorAdapter{
         }
 
         if(android.os.Build.VERSION.SDK_INT < Build.VERSION_CODES.HONEYCOMB) {
-
+            if (current==0){
+                textViewSSID.setTextColor(context.getResources().getColor(R.color.VerdeClaro));
+                textViewFabricante.setTextColor(context.getResources().getColor(R.color.VerdeClaro));
+            }else if (current==1){
+                //DO NOTHING
+                textViewSSID.setTextColor(context.getResources().getColor(R.color.PersonalizadoSteve4));
+                textViewFabricante.setTextColor(context.getResources().getColor(R.color.PersonalizadoSteve4));
+            }else{
+                textViewSSID.setTextColor(context.getResources().getColor(R.color.VerdeClaro));
+                textViewFabricante.setTextColor(context.getResources().getColor(R.color.VerdeClaro));
+            }
         }else{
             if (current==0){
                 linearLayoutDetail.setAlpha((float) 0.3);
