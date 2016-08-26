@@ -10,6 +10,7 @@ import android.net.wifi.WifiManager;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.RequiresApi;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -142,15 +143,16 @@ public class scan_result extends Activity {
 
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.HONEYCOMB)
     @Override
-    protected void onPause() {
-        wlanDB.cerrar();
-        super.onPause();
+    protected void onDestroy() {
+        //wlanDB.cerrar();
+        super.onDestroy();
     }
 
     @Override
     protected void onResume() {
-        wlanDB.abrir();
+        //wlanDB.abrir();
         super.onResume();
     }
 
@@ -176,8 +178,6 @@ public class scan_result extends Activity {
 
         @Override
         protected String doInBackground(String... strings) {
-
-
             wifiManager = (WifiManager) getSystemService(WIFI_SERVICE);
 
             if(wifiManager.getWifiState() == wifiManager.WIFI_STATE_ENABLED){
@@ -265,6 +265,8 @@ public class scan_result extends Activity {
             wlanCursorAdapter = new wlan_cursor_adapter(context, cursor, true);
             lista.setAdapter(wlanCursorAdapter);
             refreshLayout.setRefreshing(false);
+
+
 
         }
     }

@@ -279,6 +279,8 @@ public class controller_wlan {
 
 
     public int updateWlan(Wlan wlan, int id){
+
+            db = scanDBHelper.getWritableDatabase();
 /*
         String[] projection = {
                 Constants.ID_WLAN,

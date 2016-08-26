@@ -1,11 +1,13 @@
 package com.rupture.jairsteve.rupture;
 
+import android.Manifest;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.graphics.Typeface;
 import android.net.wifi.ScanResult;
 import android.net.wifi.WifiManager;
@@ -13,6 +15,8 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -38,6 +42,7 @@ import  com.rey.material.widget.CheckBox;
 public class splash_screen extends Activity {
 
 
+    private static final int MY_PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 4650;
     private Activity mainAtivity;
     private AsyncTaskScan asyncTaskScan;
 
@@ -68,8 +73,14 @@ public class splash_screen extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_splash_screen);
         mainAtivity = this;
-         prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        checkPermision();
+    }
+
+    private void init(){
+        prefs = PreferenceManager.getDefaultSharedPreferences(this);
+
         if (!prefs.getBoolean("termsUseAceppted",false)){
             setContentView(R.layout.terms_use);
             checkBoxTerms = (CheckBox) findViewById(R.id.checkBoxTerms);
@@ -93,7 +104,7 @@ public class splash_screen extends Activity {
             checkBoxTerms.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                        buttonInstall.setEnabled(isChecked);
+                    buttonInstall.setEnabled(isChecked);
                     if (isChecked){
                         if(android.os.Build.VERSION.SDK_INT < Build.VERSION_CODES.HONEYCOMB) {
 
@@ -103,9 +114,9 @@ public class splash_screen extends Activity {
                     }else {
                         if(android.os.Build.VERSION.SDK_INT < Build.VERSION_CODES.HONEYCOMB) {
 
-                    }else{
-                        buttonInstall.setAlpha((float)0.8);
-                    }
+                        }else{
+                            buttonInstall.setAlpha((float)0.8);
+                        }
                     }
                 }
             });
@@ -123,12 +134,68 @@ public class splash_screen extends Activity {
         }else{
             showSplashScreen();
         }
-
-
     }
 
+    private void checkPermision() {
+        // Here, thisActivity is the current activity
+        if (ContextCompat.checkSelfPermission(this,
+                Manifest.permission.ACCESS_FINE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED) {
 
-    public void showSplashScreen(){
+            // Should we show an explanation?
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this,
+                    Manifest.permission.ACCESS_FINE_LOCATION)) {
+
+                // Show an expanation to the user *asynchronously* -- don't block
+                // this thread waiting for the user's response! After the user
+                // sees the explanation, try again to request the permission.
+
+            } else {
+
+                // No explanation needed, we can request the permission.
+
+                ActivityCompat.requestPermissions(this,
+                        new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
+                        MY_PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION);
+
+                // MY_PERMISSIONS_REQUEST_READ_CONTACTS is an
+                // app-defined int constant. The callback method gets the
+                // result of the request.
+            }
+        }else{
+            init();
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        switch (requestCode) {
+            case MY_PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION: {
+                // If request is cancelled, the result arrays are empty.
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+
+                    // permission was granted, yay! Do the
+                    // contacts-related task you need to do.
+                    init();
+
+                } else {
+
+
+                    TextView textDev = (TextView) findViewById(R.id.textView_Splash_Screen_Developer_Name) ;
+                    textDev.setText(R.string.permission_message_needed);
+                    // permission denied, boo! Disable the
+                    // functionality that depends on this permission.
+                }
+                return;
+            }
+
+            // other 'case' lines to check for other
+            // permissions this app might request
+        }
+    }
+
+    private void showSplashScreen(){
 
         setContentView(R.layout.activity_splash_screen);
 
