@@ -5,63 +5,63 @@
     android:layout_height="match_parent">
 
     <LinearLayout
-        android:orientation="horizontal"
+        android:id="@+id/linearLayoutDetail"
         android:layout_width="fill_parent"
         android:layout_height="72dp"
         android:gravity="center_vertical"
-        android:id="@+id/linearLayoutDetail">
+        android:orientation="horizontal">
 
         <ImageView
+            android:id="@+id/imageView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/imageView"
-            android:src="@drawable/ic_done_black_48dp"
-            android:alpha="1" />
+            android:alpha="1"
+            android:src="@drawable/ic_done_black_48dp" />
 
         <LinearLayout
-            android:orientation="vertical"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
             android:layout_weight="1"
-            android:layout_marginLeft="8dp">||
+            android:orientation="vertical">||
 
             <TextView
+                android:id="@+id/textView_ssid"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="IMAGINE DRAGONS"
-                android:id="@+id/textView_ssid"
                 android:layout_weight="1"
                 android:gravity="bottom"
-                android:textStyle="bold"
+                android:text="IMAGINE DRAGONS"
+                android:textAppearance="@style/Base.TextAppearance.AppCompat.Caption"
                 android:textColor="@color/PersonalizadoSteve4"
                 android:textSize="14sp"
-                android:textAppearance="@style/Base.TextAppearance.AppCompat.Caption" />
+                android:textStyle="bold" />
 
             <TextView
+                android:id="@+id/textView_fabricante"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="TP-LINK TECHNOLOGIES"
-                android:id="@+id/textView_fabricante"
                 android:layout_weight="1"
                 android:gravity="top"
-                android:textSize="12sp"
-                android:textStyle="italic"
+                android:text="TP-LINK TECHNOLOGIES"
+                android:textAppearance="@style/Base.TextAppearance.AppCompat.Body1"
                 android:textColor="@color/PersonalizadoSteve4"
-                android:textAppearance="@style/Base.TextAppearance.AppCompat.Body1" />
+                android:textSize="12sp"
+                android:textStyle="italic" />
         </LinearLayout>
 
         <LinearLayout
-            android:orientation="horizontal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:gravity="center|right"
             android:layout_marginRight="16dp"
-            android:layout_weight="1">
+            android:layout_weight="1"
+            android:gravity="center|right"
+            android:orientation="horizontal">
 
             <ImageView
+                android:id="@+id/imageViewSignal"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/imageViewSignal"
                 android:src="@drawable/ic_signal_cellular_3_bar_black_36dp" />
         </LinearLayout>
     </LinearLayout>

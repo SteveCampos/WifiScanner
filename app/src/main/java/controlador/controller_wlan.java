@@ -102,7 +102,7 @@ public class controller_wlan {
 
 
 
-        String columnsNull[] = {Constants.PASSWORD};
+                    String columnsNull[] = {Constants.PASSWORD};
         /*
         if(name_vendor!=null) {
             String firstLetter = ""+name_vendor.charAt(0);

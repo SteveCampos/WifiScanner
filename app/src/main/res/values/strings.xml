@@ -26,4 +26,7 @@ Será reprimido con la misma pena, el que accede a un sistema informático exced
 
     </string>
     <string name="title_activity_main">MainActivity</string>
+    <string name="title_activity_navigation">NavigationActivity</string>
+    <string name="msg_error_generic">Hubo un error</string>
+    <string name="msg_try_again">Intentar nuevamente</string>
 </resources>

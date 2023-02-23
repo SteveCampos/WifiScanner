@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.rupture.jairsteve.rupture" >
+    package="com.rupture.jairsteve.rupture">
 
     <uses-feature android:name="android.hardware.wifi" />
 
@@ -9,17 +9,19 @@
     <uses-permission android:name="android.permission.CHANGE_WIFI_MULTICAST_STATE" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
 
     <application
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
+        android:name="com.rupture.jairsteve.WifiScannerApp"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme" >
+        android:theme="@style/AppTheme">
         <activity
+            android:name="com.rupture.jairsteve.navigation.NavigationActivity"
             android:exported="true"
-            android:name=".splash_screen"
-            android:label="@string/app_name" >
-
+            android:label="@string/title_activity_navigation"
+            android:theme="@style/AppTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -27,13 +29,22 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".scan_result"
-            android:label="@string/title_activity_scan_result" >
+            android:name=".splash_screen"
+            android:exported="true"
+            android:label="@string/app_name">
+            <!--<intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>-->
         </activity>
+        <activity
+            android:name=".scan_result"
+            android:label="@string/title_activity_scan_result"></activity>
         <activity
             android:name=".wlan"
             android:label="@string/title_activity_wlan"
-            android:parentActivityName=".scan_result" >
+            android:parentActivityName=".scan_result">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.rupture.jairsteve.rupture.scan_result" />
