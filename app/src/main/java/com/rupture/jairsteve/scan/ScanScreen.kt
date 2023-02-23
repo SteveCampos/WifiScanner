@@ -1,6 +1,5 @@
 package com.rupture.jairsteve.scan
 
-import android.net.wifi.ScanResult
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -19,29 +18,35 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.rupture.jairsteve.designsystem.component.ErrorWidget
 import com.rupture.jairsteve.designsystem.component.LoadingWidget
 import com.rupture.jairsteve.rupture.R
+import com.rupture.jairsteve.scan.entity.MyScanResult
 
 //Stateful Version
 @Composable
 fun ScanScreen(scanViewModel: ScanViewModel = hiltViewModel()) {
-    val state = scanViewModel.scanState.collectAsState().value
+    val state =
+        scanViewModel.scanState.collectAsState(ScanState.PerformingScan()).value
     ScanScreen(
         state = state
     )
 }
 
+//Stateless Version
 @Composable
-fun ScanScreen(state: ScanState) {
+fun ScanScreen(state: ScanState<MyScanResult>) {
     when (state) {
         is ScanState.SuccessScan -> SuccessScanScreen(state)
-        is ScanState.SecurityExceptionOnScan -> FailedScanScreen(state)
+        is ScanState.SecurityExceptionOnScan -> SecurityExceptionScreen(state)
         is ScanState.PerformingScan -> LoadingScanScreen()
         is ScanState.StartScanFailed -> StartScanFailedScreen(state)
     }
 }
 
 @Composable
-fun StartScanFailedScreen(state: ScanState.StartScanFailed) {
-    ErrorWidget(tryAgain = { state.tryAgain() })
+fun StartScanFailedScreen(state: ScanState.StartScanFailed<MyScanResult>) {
+    ErrorWidget(
+        message = "Falló el inicio del escaneo. Esto puede deberse a que la ubicación no está habilitada, r2, r3, etc.",
+        tryAgain = { state.tryAgain() }
+    )
 }
 
 @Composable
@@ -50,7 +55,8 @@ fun LoadingScanScreen() {
 }
 
 @Composable
-fun SuccessScanScreen(scanState: ScanState.SuccessScan) {
+fun SuccessScanScreen(scanState: ScanState.SuccessScan<MyScanResult>) {
+
     LazyColumn {
         items(scanState.items) { item ->
             ScanItem(item)
@@ -59,7 +65,7 @@ fun SuccessScanScreen(scanState: ScanState.SuccessScan) {
 }
 
 @Composable
-fun ScanItem(scanItem: ScanResult) {
+fun ScanItem(scanItem: MyScanResult) {
     Row(
         Modifier
             .fillMaxWidth()
@@ -72,7 +78,7 @@ fun ScanItem(scanItem: ScanResult) {
         )
         Column(Modifier.weight(1f)) {
             Text(
-                text = scanItem.BSSID,
+                text = scanItem.bssid,
                 style = MaterialTheme.typography.caption,
                 fontWeight = FontWeight.ExtraBold,
                 fontSize = 14.sp,
@@ -94,6 +100,8 @@ fun ScanItem(scanItem: ScanResult) {
 }
 
 @Composable
-fun FailedScanScreen(scanState: ScanState.SecurityExceptionOnScan) {
-    ErrorWidget(tryAgain = { scanState.tryAgain() })
+fun SecurityExceptionScreen(scanState: ScanState.SecurityExceptionOnScan<MyScanResult>) {
+    ErrorWidget(
+        message = "SecurityException (Fallo al escanear las redes disponibles). Esto puede deberse a que no se dieron permisos de Ubicación, Cambia estado de Wifi, etc",
+        tryAgain = { scanState.tryAgain() })
 }

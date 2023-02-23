@@ -17,7 +17,11 @@ import androidx.compose.ui.semantics.semantics
 import com.rupture.jairsteve.rupture.R
 
 @Composable
-fun ErrorWidget(tryAgain: () -> Unit, modifier: Modifier = Modifier) {
+fun ErrorWidget(
+    modifier: Modifier = Modifier,
+    message: String = stringResource(id = R.string.msg_error_generic),
+    tryAgain: () -> Unit,
+) {
     Column(
         modifier = modifier
             .fillMaxWidth()
@@ -32,7 +36,7 @@ fun ErrorWidget(tryAgain: () -> Unit, modifier: Modifier = Modifier) {
             contentDescription = null,
             modifier = Modifier.fillMaxSize(.4f)
         )
-        Text(stringResource(id = R.string.msg_error_generic))
+        Text(message)
         TextButton(onClick = { tryAgain() }) {
             Text(stringResource(id = R.string.msg_try_again))
         }

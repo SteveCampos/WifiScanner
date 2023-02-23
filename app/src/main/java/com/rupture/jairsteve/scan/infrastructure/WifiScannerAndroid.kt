@@ -1,13 +1,13 @@
-package com.rupture.jairsteve.scan.repository
+package com.rupture.jairsteve.scan.infrastructure
 
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
+import android.net.wifi.ScanResult
 import android.net.wifi.WifiManager
 import android.util.Log
 import com.rupture.jairsteve.scan.ScanState
-import com.rupture.jairsteve.scan.ScanViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 
 class WifiScannerAndroid(private val wifiManager: WifiManager, private val context: Context) {
@@ -17,8 +17,9 @@ class WifiScannerAndroid(private val wifiManager: WifiManager, private val conte
     }
 
 
-    private val _scanState: MutableStateFlow<ScanState> = MutableStateFlow(ScanState.PerformingScan)
-    val scanState get() = _scanState
+    private val _scanState: MutableStateFlow<ScanState<ScanResult>> =
+        MutableStateFlow(ScanState.PerformingScan())
+    val scanState /*: StateFlow<ScanState>*/ get() = _scanState
 
     private val wifiScanReceiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context, intent: Intent) {
@@ -26,6 +27,10 @@ class WifiScannerAndroid(private val wifiManager: WifiManager, private val conte
             Log.d(TAG, "wifiScanReceiver onReceive: $success")
             getScannedResults(success)
         }
+    }
+
+    init {
+        startScan()
     }
 
     fun startScan() {
@@ -38,29 +43,36 @@ class WifiScannerAndroid(private val wifiManager: WifiManager, private val conte
             wifiScanReceiver, intentFilter
         )
 
-        val startScanSuccess = wifiManager.startScan()
 
+        try {
+            val startScanSuccess = wifiManager.startScan()
+            if (!startScanSuccess) onStartScanFailure()
+        } catch (throwable: SecurityException) {
+            Log.e(TAG, throwable.stackTraceToString())
+            onSecurityException()
+        }
         // scan failure handling
-        if (!startScanSuccess) onStartScanFailure()
-
     }
 
     private fun onStartScanFailure() {
+        Log.d(TAG, "onStartScanFailure")
         _scanState.value = ScanState.StartScanFailed(::startScan)
     }
-    
+
     private fun getScannedResults(resultsUpdated: Boolean) {
-        Log.d(TAG, "scanSuccess")
+        Log.d(TAG, "getScannedResults")
         try {
             val results = wifiManager.scanResults
             _scanState.value = ScanState.SuccessScan(resultsUpdated, results)
-        } catch (securityException: SecurityException) {
-            onScanFailure()
+        } catch (throwable: SecurityException) {
+            Log.e(TAG, throwable.stackTraceToString())
+            onSecurityException()
         }
         //... use new scan results ...
     }
 
-    private fun onScanFailure() {
+    private fun onSecurityException() {
+        Log.d(TAG, "onScanFailure")
         _scanState.value = ScanState.SecurityExceptionOnScan(::startScan)
     }
 }

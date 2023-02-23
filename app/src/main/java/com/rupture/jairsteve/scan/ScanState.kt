@@ -1,12 +1,10 @@
 package com.rupture.jairsteve.scan
 
-import android.net.wifi.ScanResult
 
+sealed class ScanState<T> {
+    data class SuccessScan<T>(val resultsUpdated: Boolean, val items: List<T>) : ScanState<T>()
+    data class SecurityExceptionOnScan<T>(val tryAgain: () -> Unit) : ScanState<T>()
+    class StartScanFailed<T>(val tryAgain: () -> Unit) : ScanState<T>()
 
-sealed class ScanState {
-    data class SuccessScan(val resultsUpdated: Boolean, val items: List<ScanResult>) : ScanState()
-    data class SecurityExceptionOnScan(val tryAgain: () -> Unit) : ScanState()
-    class StartScanFailed(val tryAgain: () -> Unit) : ScanState()
-
-    object PerformingScan : ScanState()
+    class PerformingScan<T> : ScanState<T>()
 }
