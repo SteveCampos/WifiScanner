@@ -9,7 +9,7 @@ android {
 
     defaultConfig {
         applicationId "com.rupture.jairsteve.rupture"
-        minSdkVersion 23
+        minSdkVersion 33
         targetSdkVersion 33
         versionCode 1
         versionName "1.0"
@@ -67,6 +67,17 @@ dependencies {
     implementation 'com.google.dagger:hilt-android:2.45'
     kapt 'com.google.dagger:hilt-compiler:2.45'
     implementation "androidx.hilt:hilt-navigation-compose:1.0.0"
+
+
+    //Room
+    def room_version = "2.5.0"
+
+    implementation "androidx.room:room-runtime:$room_version"
+    implementation "androidx.room:room-ktx:$room_version"
+    annotationProcessor "androidx.room:room-compiler:$room_version"
+
+    // To use Kotlin annotation processing tool (kapt)
+    kapt "androidx.room:room-compiler:$room_version"
 
     androidTestImplementation "androidx.compose.ui:ui-test-junit4:$compose_ui_version"
     debugImplementation "androidx.compose.ui:ui-tooling:$compose_ui_version"

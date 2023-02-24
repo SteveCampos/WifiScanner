@@ -85,7 +85,7 @@ fun ScanItem(scanItem: MyScanResult) {
                 color = Color(R.color.PersonalizadoSteve4)
             )
             Text(
-                text = scanItem.capabilities,
+                text = scanItem.vendor.orEmpty(),
                 style = MaterialTheme.typography.body1,
                 fontSize = 12.sp,
                 fontStyle = FontStyle.Italic,
