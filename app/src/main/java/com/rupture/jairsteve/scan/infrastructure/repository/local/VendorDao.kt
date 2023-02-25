@@ -6,6 +6,6 @@ import com.rupture.jairsteve.scan.repository.entity.Vendor
 
 @Dao
 interface VendorDao {
-    @Query("SELECT * FROM vendor WHERE id_vendor LIKE '%' || :oui || '%' LIMIT 1")
+    @Query("SELECT * FROM mac_vendors WHERE mac_prefix LIKE '%' || :oui || '%' LIMIT 1")
     suspend fun findByOui(oui: String): Vendor?
 }

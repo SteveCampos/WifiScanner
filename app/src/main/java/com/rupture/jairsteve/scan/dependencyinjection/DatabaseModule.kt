@@ -21,7 +21,7 @@ object DatabaseModule {
     @Provides
     fun provideDatabase(@ApplicationContext appContext: Context): WifiScannerDatabase =
         Room.databaseBuilder(appContext, WifiScannerDatabase::class.java, "WifiScannerDatabase.db")
-            .createFromAsset("scan.db")
+            .createFromAsset("databases/mac-vendors-db.sqlite")
             .fallbackToDestructiveMigration()
             .build()
 

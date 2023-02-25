@@ -1,7 +1,6 @@
 package com.rupture.jairsteve.scan
 
 import android.net.wifi.ScanResult
-import android.widget.FilterQueryProvider
 import androidx.lifecycle.ViewModel
 import com.rupture.jairsteve.scan.entity.MyScanResult
 import com.rupture.jairsteve.scan.infrastructure.WifiScannerAndroid
@@ -33,9 +32,9 @@ class ScanViewModel @Inject constructor(
                         val items = scanState.items.map {
 
 
-                            val cleanedBssid = it.BSSID.replace(":", "")
+                            val bssid = it.BSSID
                             val oui: String =
-                                if (cleanedBssid.length > 6) cleanedBssid.substring(0, 6) else ""
+                                if (bssid.length > 8) bssid.substring(0, 8) else ""
 
                             var vendor: Vendor? = null
 
@@ -51,7 +50,7 @@ class ScanViewModel @Inject constructor(
                             }
 
 
-                            MyScanResult(it.toString(), it.capabilities, vendor?.name)
+                            MyScanResult(it.SSID, it.capabilities, vendor?.name)
                         }
                         ScanState.SuccessScan<MyScanResult>(scanState.resultsUpdated, items)
                     }
