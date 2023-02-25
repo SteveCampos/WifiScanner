@@ -50,7 +50,13 @@ class ScanViewModel @Inject constructor(
                             }
 
 
-                            MyScanResult(it.SSID, it.capabilities, vendor?.name)
+                            MyScanResult(
+                                bssid = it.BSSID,
+                                ssid = it.SSID,
+                                capabilities = it.capabilities,
+                                vendorMacPrefix = vendor?.macPrefix,
+                                vendorName = vendor?.name
+                            )
                         }
                         ScanState.SuccessScan<MyScanResult>(scanState.resultsUpdated, items)
                     }

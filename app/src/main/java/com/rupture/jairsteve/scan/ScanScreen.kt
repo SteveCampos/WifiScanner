@@ -10,6 +10,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -73,10 +74,18 @@ fun ScanItem(scanItem: MyScanResult) {
         verticalAlignment = Alignment.CenterVertically
     ) {
         Icon(
-            painter = painterResource(id = R.drawable.ic_done_black_48dp),
+            painter = painterResource(id = if (scanItem.canCalculateDefaultPassword()) R.drawable.ic_done_black_48dp else R.drawable.ic_circle),
             contentDescription = null
         )
+        Spacer(modifier = Modifier.padding(horizontal = 8.dp))
         Column(Modifier.weight(1f)) {
+            Text(
+                text = scanItem.ssid,
+                style = MaterialTheme.typography.caption,
+                fontWeight = FontWeight.ExtraBold,
+                fontSize = 14.sp,
+                color = Color(R.color.PersonalizadoSteve4)
+            )
             Text(
                 text = scanItem.bssid,
                 style = MaterialTheme.typography.caption,
@@ -85,7 +94,14 @@ fun ScanItem(scanItem: MyScanResult) {
                 color = Color(R.color.PersonalizadoSteve4)
             )
             Text(
-                text = scanItem.vendor.orEmpty(),
+                text = scanItem.vendorName ?: stringResource(id = R.string.msg_vendor_unknown),
+                style = MaterialTheme.typography.body1,
+                fontSize = 12.sp,
+                fontStyle = FontStyle.Italic,
+                color = Color(R.color.PersonalizadoSteve4)
+            )
+            Text(
+                text = scanItem.getDefaultPassword().orEmpty(),
                 style = MaterialTheme.typography.body1,
                 fontSize = 12.sp,
                 fontStyle = FontStyle.Italic,
