@@ -8,6 +8,7 @@ import android.net.wifi.ScanResult
 import android.net.wifi.WifiManager
 import android.util.Log
 import com.rupture.jairsteve.scan.ScanState
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 
 class WifiScannerAndroid(private val wifiManager: WifiManager, private val context: Context) {
@@ -19,7 +20,7 @@ class WifiScannerAndroid(private val wifiManager: WifiManager, private val conte
 
     private val _scanState: MutableStateFlow<ScanState<ScanResult>> =
         MutableStateFlow(ScanState.PerformingScan())
-    val scanState /*: StateFlow<ScanState>*/ get() = _scanState
+    val scanState: Flow<ScanState<ScanResult>> get() = _scanState
 
     private val wifiScanReceiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context, intent: Intent) {
@@ -51,7 +52,6 @@ class WifiScannerAndroid(private val wifiManager: WifiManager, private val conte
             Log.e(TAG, throwable.stackTraceToString())
             onSecurityException()
         }
-        // scan failure handling
     }
 
     private fun onStartScanFailure() {

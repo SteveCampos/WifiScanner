@@ -8,68 +8,69 @@
     android:baselineAligned="false"
     android:orientation="vertical"
     android:background="@color/Blanco">
-            <LinearLayout
-                android:orientation="vertical"
-                android:layout_width="fill_parent"
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_weight="1"
+        android:gravity="bottom|center_horizontal"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/ic_launcher_2" />
+
+        <TextView
+            android:id="@+id/textView_scan_result_ssid"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:gravity="center"
+            android:text="WLAN_6789"
+            android:textColor="@color/Dark5"
+            android:textSize="32sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/textView_scan_result_ubication"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Lima, Perú"
+            android:textColor="@color/Dark1" />
+
+        <ProgressBar
+            android:id="@+id/progressBar_scan_result_signal"
+            style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+            android:layout_width="256dp"
+            android:layout_height="4dp"
+            android:layout_gravity="top|center_horizontal"
+            android:layout_marginTop="8dp"
+            android:progress="50"
+            android:progressBackgroundTint="@color/Dark1"
+            android:progressTint="@color/azul" />
+
+
+        <LinearLayout
+            android:id="@+id/linearLayout"
+            android:layout_width="fill_parent"
+            android:layout_height="32dp"
+            android:layout_marginBottom="16dp"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/textViewFabricante"
+                android:layout_width="wrap_content"
                 android:layout_height="fill_parent"
-                android:gravity="bottom|center_horizontal"
-                android:layout_weight="1">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/textView"
-                    android:background="@drawable/ic_launcher_2" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="WLAN_6789"
-                    android:id="@+id/textView_scan_result_ssid"
-                    android:textStyle="bold"
-                    android:textSize="32sp"
-                    android:gravity="center"
-                    android:textColor="@color/Dark5"
-                    android:layout_marginTop="16dp" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Lima, Perú"
-                    android:id="@+id/textView_scan_result_ubication"
-                    android:textColor="@color/Dark1" />
-
-                <ProgressBar
-                    android:layout_width="256dp"
-                    android:layout_height="4dp"
-                    android:id="@+id/progressBar_scan_result_signal"
-                    android:layout_gravity="top|center_horizontal"
-                    style="@style/Widget.AppCompat.ProgressBar.Horizontal"
-                    android:progress="50"
-                    android:layout_marginTop="8dp"
-                    android:progressTint="@color/azul"
-                    android:progressBackgroundTint="@color/Dark1" />
-
-
-                <LinearLayout
-                    android:orientation="horizontal"
-                    android:layout_width="fill_parent"
-                    android:layout_height="32dp"
-                    android:gravity="center"
-                    android:id="@+id/linearLayout"
-                    android:layout_marginBottom="16dp">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="fill_parent"
-                        android:text="TP-LINK TECHNOLOGIES"
-                        android:id="@+id/textViewFabricante"
-                        android:layout_weight="2"
-                        android:gravity="center"
-                        android:textColor="@color/Dark5"
-                        android:textStyle="italic" />
-                </LinearLayout>
-            </LinearLayout>
+                android:layout_weight="2"
+                android:gravity="center"
+                android:text="TP-LINK TECHNOLOGIES"
+                android:textColor="@color/Dark5"
+                android:textStyle="italic" />
+        </LinearLayout>
+    </LinearLayout>
 
     <ScrollView
         android:layout_width="fill_parent"

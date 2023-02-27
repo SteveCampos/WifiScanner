@@ -21,4 +21,6 @@ object ScanerModule {
             wifiManager = context.applicationContext.getSystemService(Context.WIFI_SERVICE) as WifiManager,
             context = context
         )
+
+
 }

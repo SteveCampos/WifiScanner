@@ -2,9 +2,8 @@ package com.rupture.jairsteve.scan.dependencyinjection
 
 import android.content.Context
 import androidx.room.Room
-import com.rupture.jairsteve.scan.infrastructure.repository.local.VendorDao
-import com.rupture.jairsteve.scan.infrastructure.repository.local.VendorRepositoryLocal
-import com.rupture.jairsteve.scan.infrastructure.repository.local.WifiScannerDatabase
+import com.rupture.jairsteve.scan.infrastructure.repository.local.*
+import com.rupture.jairsteve.scan.repository.MyScanResultRepository
 import com.rupture.jairsteve.scan.repository.VendorRepository
 import dagger.Module
 import dagger.Provides
@@ -36,4 +35,18 @@ object DatabaseModule {
     @Provides
     fun provideVendorRepository(vendorDao: VendorDao): VendorRepository =
         VendorRepositoryLocal(vendorDao)
+
+
+    @Singleton
+    @Provides
+    fun provideMyScanResultDao(wifiScannerDatabase: WifiScannerDatabase): MyScanResultDao =
+        wifiScannerDatabase.myScanResultDao()
+
+
+    @Singleton
+    @Provides
+    fun provideMyScanResultRepository(myScanResultDao: MyScanResultDao): MyScanResultRepository =
+        MyScanRepositoryLocal(myScanResultDao)
+
+
 }
