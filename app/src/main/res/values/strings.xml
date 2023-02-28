@@ -31,6 +31,7 @@ Será reprimido con la misma pena, el que accede a un sistema informático exced
     <string name="msg_try_again">Intentar nuevamente</string>
     <string name="msg_vendor_unknown">Fabricante Desconocido</string>
     <string name="msg_available">Redes Disponibles</string>
-    <string name="msg_scanned">Redes escaneadas</string>
+    <string name="msg_scanned">Redes Escaneadas</string>
     <string name="msg_network_founded">Redes descubiertas</string>
+    <string name="msg_saved_scanned_networks">Redes Guardadas</string>
 </resources>

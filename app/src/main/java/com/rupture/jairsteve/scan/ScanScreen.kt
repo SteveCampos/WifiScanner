@@ -64,29 +64,77 @@ fun SuccessScanScreen(
     scanState: ScanState.SuccessScan<MyScanResult>, onScanItemClicked: (MyScanResult) -> Unit
 ) {
 
-    Scaffold(backgroundColor = colorResource(id = R.color.BlancoGris)) {
+    Scaffold(backgroundColor = colorResource(id = R.color.BlancoGris), topBar = {
+        TopAppBar(backgroundColor = colorResource(id = R.color.BlancoGris), elevation = 0.dp) {
+            Icon(
+                painter = painterResource(id = R.drawable.baseline_menu_24),
+                contentDescription = null,
+                modifier = Modifier.padding(start = 32.dp/*, top = 8.dp, bottom = 8.dp, end = 32.dp*/)
+            )
+        }
+    }) {
         Column(
             modifier = Modifier
                 .padding(16.dp)
                 .padding(it)
         ) {
-            Text(text = "${scanState.items.size}", style = MaterialTheme.typography.h1)
+
+            Text(
+                text = "${scanState.items.size}",
+                style = MaterialTheme.typography.h2,
+                modifier = Modifier.padding(start = 16.dp)
+            )
             Spacer(modifier = Modifier.height(0.dp))
             Text(
                 text = stringResource(id = R.string.msg_network_founded),
                 style = MaterialTheme.typography.h6,
-                fontWeight = FontWeight.Normal
+                fontWeight = FontWeight.Normal,
+                modifier = Modifier.padding(start = 16.dp)
             )
             Spacer(modifier = Modifier.height(16.dp))
             Row() {
-                Text(text = "San Miguel", style = MaterialTheme.typography.body1)
+                Text(
+                    text = "San Miguel",
+                    style = MaterialTheme.typography.body1,
+                    modifier = Modifier.padding(start = 16.dp)
+                )
                 Icon(
-                    painter = painterResource(id = R.drawable.ic_signal),
+                    painter = painterResource(id = R.drawable.baseline_location_on_24),
                     contentDescription = null
                 )
             }
             Spacer(modifier = Modifier.height(32.dp))
-            CardScannedItems(items = scanState.items, onScanItemClicked = onScanItemClicked)
+            LazyColumn(contentPadding = PaddingValues(vertical = 24.dp)) {
+
+                item {
+                    CardScannedItems(items = scanState.items, onScanItemClicked = onScanItemClicked)
+                    Spacer(modifier = Modifier.height(24.dp))
+                    CardSavedItems(items = scanState.items, onScanItemClicked = onScanItemClicked)
+                }
+            }
+        }
+    }
+}
+
+@Composable
+fun CardSavedItems(items: List<MyScanResult>, onScanItemClicked: (MyScanResult) -> Unit) {
+    Card(
+        backgroundColor = Color.White, shape = RoundedCornerShape(16.dp)
+    ) {
+        Column(Modifier.padding(bottom = 8.dp)) {
+
+            Text(
+                text = stringResource(id = R.string.msg_saved_scanned_networks),
+                style = MaterialTheme.typography.caption,
+                fontWeight = FontWeight.SemiBold,
+                fontStyle = FontStyle.Italic,
+                color = Color(R.color.PersonalizadoSteve4),
+                modifier = Modifier.padding(start = 32.dp, top = 16.dp, bottom = 16.dp, end = 32.dp)
+            )
+            items.map { item ->
+                ScanItem(item, modifier = Modifier.clickable { onScanItemClicked(item) })
+                Divider(startIndent = 48.dp)
+            }
         }
     }
 }
@@ -94,21 +142,21 @@ fun SuccessScanScreen(
 @Composable
 fun CardScannedItems(items: List<MyScanResult>, onScanItemClicked: (MyScanResult) -> Unit) {
     Card(
-        backgroundColor = Color.White,
-        shape = RoundedCornerShape(16.dp)
+        backgroundColor = Color.White, shape = RoundedCornerShape(16.dp)
     ) {
-        LazyColumn(Modifier.padding(bottom = 8.dp)) {
-            item {
-                Text(
-                    text = stringResource(id = R.string.msg_scanned),
-                    style = MaterialTheme.typography.subtitle1,
-                    fontWeight = FontWeight.ExtraBold,
-                    color = Color(R.color.PersonalizadoSteve4),
-                    modifier = Modifier.padding(start = 32.dp, top = 16.dp, bottom = 16.dp)
-                )
-            }
-            items(items) { item ->
+        Column(Modifier.padding(bottom = 8.dp)) {
+
+            Text(
+                text = stringResource(id = R.string.msg_scanned),
+                style = MaterialTheme.typography.caption,
+                fontWeight = FontWeight.SemiBold,
+                fontStyle = FontStyle.Italic,
+                color = Color(R.color.PersonalizadoSteve4),
+                modifier = Modifier.padding(start = 32.dp, top = 16.dp, bottom = 16.dp, end = 32.dp)
+            )
+            items.map { item ->
                 ScanItem(item, modifier = Modifier.clickable { onScanItemClicked(item) })
+                Divider(startIndent = 32.dp)
             }
         }
     }
@@ -122,10 +170,12 @@ fun ScanItem(scanItem: MyScanResult, modifier: Modifier = Modifier) {
             .padding(PaddingValues(horizontal = 16.dp, vertical = 8.dp)),
         verticalAlignment = Alignment.CenterVertically
     ) {
-        /*Icon(
-            painter = painterResource(id = if (scanItem.canCalculateDefaultPassword()) R.drawable.ic_done_black_48dp else R.drawable.ic_circle),
+        /*
+        Icon(
+            painter = painterResource(id = if (scanItem.canCalculateDefaultPassword()) R.ldrawable.ic_done_black_48dp else R.drawable.ic_circle),
             contentDescription = null
-        )*/
+        )
+        */
         Spacer(modifier = Modifier.padding(horizontal = 8.dp))
         Column(Modifier.weight(1f)) {
             Text(
@@ -135,13 +185,13 @@ fun ScanItem(scanItem: MyScanResult, modifier: Modifier = Modifier) {
                 fontSize = 14.sp,
                 color = Color(R.color.PersonalizadoSteve4)
             )
-            Text(
+            /*Text(
                 text = scanItem.bssid,
                 style = MaterialTheme.typography.caption,
                 fontWeight = FontWeight.ExtraBold,
                 fontSize = 14.sp,
                 color = Color(R.color.PersonalizadoSteve4)
-            )
+            )*/
             Text(
                 text = scanItem.vendorName ?: stringResource(id = R.string.msg_vendor_unknown),
                 style = MaterialTheme.typography.body1,
