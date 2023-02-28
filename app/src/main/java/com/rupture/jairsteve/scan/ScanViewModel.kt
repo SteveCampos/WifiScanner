@@ -57,7 +57,7 @@ class ScanViewModel @Inject constructor(
 
                     MyScanResult(
                         bssid = it.BSSID,
-                        ssid = it.wifiSsid.toString(),
+                        ssid = it.wifiSsid.toString().replace("\"", ""),
                         capabilities = it.capabilities,
                         vendorName = vendor?.name
                     )
