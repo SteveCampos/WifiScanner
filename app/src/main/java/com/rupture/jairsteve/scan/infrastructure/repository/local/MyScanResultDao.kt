@@ -5,11 +5,12 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.rupture.jairsteve.scan.entity.MyScanResult
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface MyScanResultDao {
     @Query("SELECT * FROM wlan")
-    suspend fun getScannedItems(): List<MyScanResult>
+    fun getScannedItems(): Flow<List<MyScanResult>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun addOrReplace(items: List<MyScanResult>)

@@ -4,7 +4,7 @@ import com.rupture.jairsteve.scan.entity.MyScanResult
 import com.rupture.jairsteve.scan.repository.MyScanResultRepository
 
 class MyScanRepositoryLocal(private val myScanResultDao: MyScanResultDao) : MyScanResultRepository {
-    override suspend fun getMyScanResultList(): List<MyScanResult> =
+    override fun getMyScanResultList() =
         myScanResultDao.getScannedItems()
 
     override suspend fun saveOrUpdate(scannedItems: List<MyScanResult>) =

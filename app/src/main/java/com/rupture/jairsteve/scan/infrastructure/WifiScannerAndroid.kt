@@ -14,7 +14,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 class WifiScannerAndroid(private val wifiManager: WifiManager, private val context: Context) {
 
     companion object {
-        const val TAG = "ScanResultImpl"
+        const val TAG = "WifiScannerAndroid"
     }
 
 
@@ -63,6 +63,7 @@ class WifiScannerAndroid(private val wifiManager: WifiManager, private val conte
         Log.d(TAG, "getScannedResults")
         try {
             val results = wifiManager.scanResults
+            Log.d(TAG, "scanned items: ${results.size}")
             _scanState.value = ScanState.SuccessScan(resultsUpdated, results)
         } catch (throwable: SecurityException) {
             Log.e(TAG, throwable.stackTraceToString())

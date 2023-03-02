@@ -3,7 +3,6 @@ package com.rupture.jairsteve.scan
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
@@ -11,7 +10,6 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontStyle
@@ -27,24 +25,81 @@ import com.rupture.jairsteve.scan.entity.MyScanResult
 //Stateful Version
 @Composable
 fun ScanScreen(
-    onScanItemClicked: (MyScanResult) -> Unit, scanViewModel: ScanViewModel = hiltViewModel()
+    onScanItemClicked: (MyScanResult) -> Unit,
+    scanViewModel: ScanViewModel = hiltViewModel(),
+    savedNetworksViewModel: SavedNetworksViewModel = hiltViewModel()
 ) {
-    val state = scanViewModel.scanState.collectAsState(ScanState.PerformingScan()).value
+    val scanState = scanViewModel.scanState.collectAsState(ScanState.PerformingScan()).value
+    val savedNetworksState = savedNetworksViewModel.savedNetworksState.collectAsState().value
     ScanScreen(
-        state = state, onScanItemClicked
+        scanState = scanState,
+        savedNetworksState = savedNetworksState,
+        onScanItemClicked = onScanItemClicked,
+        onSavedNetworkItemClicked = onScanItemClicked
     )
 }
 
 //Stateless Version
 @Composable
 fun ScanScreen(
-    state: ScanState<MyScanResult>, onScanItemClicked: (MyScanResult) -> Unit
+    scanState: ScanState<MyScanResult>,
+    savedNetworksState: SavedNetworksState,
+    onScanItemClicked: (MyScanResult) -> Unit,
+    onSavedNetworkItemClicked: (MyScanResult) -> Unit
 ) {
-    when (state) {
-        is ScanState.SuccessScan -> SuccessScanScreen(state, onScanItemClicked)
-        is ScanState.SecurityExceptionOnScan -> SecurityExceptionScreen(state)
+    Scaffold() {
+        LazyColumn(modifier = Modifier.padding(it)) {
+            item {
+                ScannedNetworks(scanState, onScanItemClicked)
+            }
+            item {
+                SavedNetworks(savedNetworksState, onSavedNetworkItemClicked)
+            }
+        }
+    }
+}
+
+@Composable
+fun SavedNetworks(
+    savedNetworksState: SavedNetworksState,
+    onSavedNetworkItemClicked: (MyScanResult) -> Unit
+) {
+    when (savedNetworksState) {
+        is SavedNetworksState.Loading -> SavedNetworksLoading()
+        is SavedNetworksState.Error -> SavedNetworksError(savedNetworksState)
+        is SavedNetworksState.Success -> SavedNetworksSuccess(
+            savedNetworksState,
+            onSavedNetworkItemClicked
+        )
+    }
+}
+
+@Composable
+fun SavedNetworksSuccess(
+    savedNetworksState: SavedNetworksState.Success,
+    onSavedNetworkItemClicked: (MyScanResult) -> Unit
+) {
+    CardSavedItems(items = savedNetworksState.items, onScanItemClicked = onSavedNetworkItemClicked)
+}
+
+@Composable
+fun SavedNetworksError(savedNetworksState: SavedNetworksState.Error) {
+    ErrorWidget(message = "Error al obt4ener las redes escaneadas guardadas en el dispositivo",
+        tryAgain = { savedNetworksState.tryAgain() })
+}
+
+@Composable
+fun SavedNetworksLoading() {
+    LoadingWidget()
+}
+
+@Composable
+fun ScannedNetworks(scanState: ScanState<MyScanResult>, onScanItemClicked: (MyScanResult) -> Unit) {
+    when (scanState) {
+        is ScanState.SuccessScan -> SuccessScanScreen(scanState, onScanItemClicked)
+        is ScanState.SecurityExceptionOnScan -> SecurityExceptionScreen(scanState)
         is ScanState.PerformingScan -> LoadingScanScreen()
-        is ScanState.StartScanFailed -> StartScanFailedScreen(state)
+        is ScanState.StartScanFailed -> StartScanFailedScreen(scanState)
     }
 }
 
@@ -63,8 +118,7 @@ fun LoadingScanScreen() {
 fun SuccessScanScreen(
     scanState: ScanState.SuccessScan<MyScanResult>, onScanItemClicked: (MyScanResult) -> Unit
 ) {
-
-    Scaffold(backgroundColor = colorResource(id = R.color.BlancoGris), topBar = {
+    /*Scaffold(backgroundColor = colorResource(id = R.color.BlancoGris), topBar = {
         TopAppBar(backgroundColor = colorResource(id = R.color.BlancoGris), elevation = 0.dp) {
             Icon(
                 painter = painterResource(id = R.drawable.baseline_menu_24),
@@ -72,48 +126,46 @@ fun SuccessScanScreen(
                 modifier = Modifier.padding(start = 32.dp/*, top = 8.dp, bottom = 8.dp, end = 32.dp*/)
             )
         }
-    }) {
-        Column(
-            modifier = Modifier
-                .padding(16.dp)
-                .padding(it)
-        ) {
+    }) {*/
+    Column(
+        modifier = Modifier
+            .padding(16.dp)
+        //.padding(it)
+    ) {
 
+        Text(
+            text = "${scanState.items.size}",
+            style = MaterialTheme.typography.h2,
+            modifier = Modifier.padding(start = 16.dp)
+        )
+        Spacer(modifier = Modifier.height(0.dp))
+        Text(
+            text = stringResource(id = R.string.msg_network_founded),
+            style = MaterialTheme.typography.h6,
+            fontWeight = FontWeight.Normal,
+            modifier = Modifier.padding(start = 16.dp)
+        )
+        Spacer(modifier = Modifier.height(16.dp))
+        Row() {
             Text(
-                text = "${scanState.items.size}",
-                style = MaterialTheme.typography.h2,
+                text = "San Miguel",
+                style = MaterialTheme.typography.body1,
                 modifier = Modifier.padding(start = 16.dp)
             )
-            Spacer(modifier = Modifier.height(0.dp))
-            Text(
-                text = stringResource(id = R.string.msg_network_founded),
-                style = MaterialTheme.typography.h6,
-                fontWeight = FontWeight.Normal,
-                modifier = Modifier.padding(start = 16.dp)
+            Icon(
+                painter = painterResource(id = R.drawable.baseline_location_on_24),
+                contentDescription = null
             )
-            Spacer(modifier = Modifier.height(16.dp))
-            Row() {
-                Text(
-                    text = "San Miguel",
-                    style = MaterialTheme.typography.body1,
-                    modifier = Modifier.padding(start = 16.dp)
-                )
-                Icon(
-                    painter = painterResource(id = R.drawable.baseline_location_on_24),
-                    contentDescription = null
-                )
-            }
-            Spacer(modifier = Modifier.height(32.dp))
-            LazyColumn(contentPadding = PaddingValues(vertical = 24.dp)) {
+        }
+        Spacer(modifier = Modifier.height(32.dp))
+        Column(modifier = Modifier.padding(vertical = 24.dp)) {
 
-                item {
-                    CardScannedItems(items = scanState.items, onScanItemClicked = onScanItemClicked)
-                    Spacer(modifier = Modifier.height(24.dp))
-                    CardSavedItems(items = scanState.items, onScanItemClicked = onScanItemClicked)
-                }
-            }
+            CardScannedItems(items = scanState.items, onScanItemClicked = onScanItemClicked)
+            Spacer(modifier = Modifier.height(24.dp))
+
         }
     }
+    //}
 }
 
 @Composable
@@ -133,7 +185,7 @@ fun CardSavedItems(items: List<MyScanResult>, onScanItemClicked: (MyScanResult) 
             )
             items.map { item ->
                 ScanItem(item, modifier = Modifier.clickable { onScanItemClicked(item) })
-                Divider(startIndent = 48.dp)
+                Divider(startIndent = 32.dp)
             }
         }
     }

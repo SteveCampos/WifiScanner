@@ -29,6 +29,7 @@ fun ScanDetailScreen(
         bssid = "E8:94:F6:C2:5F:CE",
         ssid = "WLAN_XXXX",
         capabilities = "[WPA-PSKP-TKIP+CCMP]",
+        vendorMacPrefix = "00:00:00",
         vendorName = "TP-LINK TECHNOLOGIES"
     )
 ) {

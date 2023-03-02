@@ -14,7 +14,7 @@ class ScanDestination {
 
 fun NavGraphBuilder.scanScreen(onScanItemClicked: (MyScanResult) -> Unit) {
     composable(ScanDestination.route) {
-        ScanScreen(onScanItemClicked)
+        ScanScreen(onScanItemClicked = onScanItemClicked)
     }
 }
 

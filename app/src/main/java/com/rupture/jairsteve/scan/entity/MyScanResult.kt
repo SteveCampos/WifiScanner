@@ -11,11 +11,11 @@ data class MyScanResult(
     @PrimaryKey val bssid: String,
     val ssid: String,
     val capabilities: String,
-    /*val vendorMacPrefix: String?,*/
+    val vendorMacPrefix: String,
     val vendorName: String?
 ) {
 
-    fun getVendorMacPrefix() = if (bssid.length > 8) bssid.substring(0, 8) else ""
+    //fun getVendorMacPrefix() = if (bssid.length > 8) bssid.substring(0, 8) else ""
 
     fun canCalculateDefaultPassword() = getDefaultPassword() != null
 
@@ -32,7 +32,7 @@ data class MyScanResult(
 
         return try {
 
-            val cleanedOui = getVendorMacPrefix().replace(":", "")
+            val cleanedOui = vendorMacPrefix.replace(":", "")
             val firstLetterVendor = vendorName?.first().toString().toUpperCase(Locale.current)
             val bssid4Pair = bssid.split(':')[3]
             val ssidLast4Digits = ssid.takeLast(4)
